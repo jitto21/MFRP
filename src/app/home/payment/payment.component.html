@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="pay-form">
+        <h4>Enter your Payment Details</h4>
+        <form [formGroup]="payForm" (submit)="onPayFormSubmit()">
+            <div class="form-row mb-2">
+                <label class="mb-0 col-sm-2" for="name">Name on Card</label>
+                <input type="text" class="form-control col-sm-6" formControlName="name">
+            </div>
+            <div class="form-row mb-2">
+                <label class="mb-0 col-sm-2" for="">Card Number</label>
+                <input type="text" class="form-control col-sm-5" formControlName="cardno"
+                    placeholder="16 digit Card Number">
+            </div>
+            <div class="form-row">
+                <label class="mb-0 col-sm-2 col-xs-2" for="">Expiry Date</label>
+                <input type="text" class="form-control col-sm-2 col-xs-4 mb-2" formControlName="expiry" placeholder="MM/YY">
+                <label class="mb-0 col-sm-2 col-xs-1 text-sm-center" for="">CVV</label>
+                <input type="text" class="form-control col-sm-2 col-xs-5 mb-2" formControlName="cvv" placeholder="***">
+            </div>
+            <div class="col-sm-6 col-xs-12">
+                <div class="pay-btn">
+                    <button type="submit" class="btn btn-success">Pay</button> |
+                    <button type="button" class="btn btn-danger">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

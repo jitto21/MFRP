@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="plan-form">
+        <form [formGroup]="planForm" (submit)="onSubmitPlan()">
+            <div class="form-row">
+                <div class="col-sm-4">
+                    <input class="form-control  mb-2" type="text" formControlName='from' placeholder="From">
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control  mb-2" type="text" formControlName='to' placeholder="To">
+                </div>
+                <div class="col-sm-3">
+                    <input [min]="todayDate" class="form-control  mb-2" type="date" formControlName='date'>
+                </div>
+                <div class="col-sm-1">
+                    <button [disabled]="planForm.invalid" class="btn btn-primary" type="submit">GO</button>
+                </div>
+            </div>
+            <button (click)="onClearForm()" type="button" class="btn btn-sm">Clear</button> | <button type="button" class="btn btn-sm">Edit</button> 
+        </form>
+    </div>
+    <div class="bus-table table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="row">No:</th>
+                    <th>Bus Type</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Date</th>
+                    <th>Available</th>
+                    <th>Fare</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let arr of array; let i=index">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{arr.type}}</td>
+                    <td>{{arr.dep}}</td>
+                    <td>{{arr.arr}}</td>
+                    <td>{{arr.date}}</td>
+                    <td>{{arr.ava}}</td>
+                    <td>{{arr.fare}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+.container {
+    margin: 0px auto;
+    padding: 20vh 0 0 0;
+    /* display: flex; */
+}
+
+.content {
+    /* flex: 1 1 auto; */
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.5);
+}

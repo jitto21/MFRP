@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class PaymentComponent implements OnInit {
   payForm: FormGroup;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.payForm = new FormGroup({
@@ -20,6 +20,7 @@ export class PaymentComponent implements OnInit {
     })
   }
   onPayFormSubmit() {
-    this.router.navigate(['/confirm']);
+    console.log(this.route);
+    this.router.navigate(['home/confirm']);
   }
 }

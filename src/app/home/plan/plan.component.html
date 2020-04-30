@@ -3,22 +3,28 @@
         <form [formGroup]="planForm" (submit)="onSubmitPlan()">
             <div class="form-row">
                 <div class="col-sm-4">
-                    <input class="form-control  mb-2" type="text" formControlName='from' placeholder="From">
+                    <label for="" class="m-0">From</label>
+                    <input class="form-control  mb-2" type="text" formControlName='from'>
                 </div>
                 <div class="col-sm-4">
-                    <input class="form-control  mb-2" type="text" formControlName='to' placeholder="To">
+                    <label for="" class="m-0">To</label>
+                    <input class="form-control  mb-2" type="text" formControlName='to'>
                 </div>
                 <div class="col-sm-3">
-                    <input [min]="todayDate" class="form-control  mb-2" type="date" formControlName='date'>
+                    <label for="" class="m-0">Date</label>
+                    <input [min]="todayDate" class="form-control" type="date" formControlName='date'>
                 </div>
                 <div class="col-sm-1">
-                    <button [disabled]="planForm.invalid" class="btn btn-primary" type="submit">GO</button>
+                    <button [disabled]="planForm.invalid" class="btn btn-primary mt-4" type="submit">GO</button>
                 </div>
             </div>
-            <button (click)="onClearForm()" type="button" class="btn btn-sm">Clear</button> | <button type="button" class="btn btn-sm">Edit</button> 
+            <button (click)="onClearBusArray()" type="button" class="btn btn-sm">Clear</button> | <button type="button" class="btn btn-sm">Edit</button> 
         </form>
     </div>
-    <div class="bus-table table-responsive">
+    <div class="alert alert-warning p-0 m-1" *ngIf="showNoBusesMsg">
+        <p>No buses in this route found</p>
+    </div>
+    <div class="bus-table table-responsive" *ngIf="busesArray.length>0">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -32,14 +38,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let arr of array; let i=index">
+                <tr *ngFor="let bus of busesArray; let i=index">
                     <th scope="row">{{i+1}}</th>
-                    <td>{{arr.type}}</td>
-                    <td>{{arr.dep}}</td>
-                    <td>{{arr.arr}}</td>
-                    <td>{{arr.date}}</td>
-                    <td>{{arr.ava}}</td>
-                    <td>{{arr.fare}}</td>
+                    <td>{{bus.type}}</td>
+                    <td>{{bus.dep}}</td>
+                    <td>{{bus.arr}}</td>
+                    <td>{{bus.date}}</td>
+                    <td>{{bus.ava}}</td>
+                    <td>{{bus.fare}}</td>
+                    <td>
+                        <button type="button" (click)="onClickSeats(bus)" class="btn btn-sm btn-success">View Seats</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

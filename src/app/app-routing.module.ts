@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
-import { HomeComponent } from './home/home.component';
+import { AuthGaurd } from './auth/auth.gaurd';
 
 
 const routes: Routes = [
   {path: '', component: AuthComponent},
-  {path: 'home', loadChildren: ()=> import('../app/home/home.module').then(m => m.HomeModule)}
+  {path: 'home',canActivate: [AuthGaurd], loadChildren: ()=> import('../app/home/home.module').then(m => m.HomeModule)}
 ];
 
 @NgModule({

@@ -6,7 +6,7 @@ import { AuthGaurd } from './auth/auth.gaurd';
 
 const routes: Routes = [
   {path: '', component: AuthComponent},
-  {path: 'home',canActivate: [AuthGaurd], loadChildren: ()=> import('../app/home/home.module').then(m => m.HomeModule)}
+  {path: 'home', loadChildren: ()=> import('../app/home/home.module').then(m => m.HomeModule)}
 ];
 
 @NgModule({

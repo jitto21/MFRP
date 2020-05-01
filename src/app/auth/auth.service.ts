@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class AuthService {
+    url: string = '';
     private token: string = null;
     private isAuthenticated: boolean = false;
     private logoutTimer;
@@ -15,6 +16,10 @@ export class AuthService {
     private loggedInUser = {lname: '',fname: ''}   
 
     constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+
+    getUrl() {
+        return this.url;
+    }
 
     getLoggedInUser() {
         return this.loggedInUser;

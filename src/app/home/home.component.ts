@@ -1,17 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-
   loggedInUser;
-  constructor(private route: ActivatedRoute, private authService: AuthService) { }
+  constructor(private authService: AuthService) { 
+  
+  }
 
   ngOnInit(): void {
     this.loggedInUser = this.authService.getLoggedInUser();

@@ -4,22 +4,44 @@
         <form [formGroup]="payForm" (submit)="onPayFormSubmit()">
             <div class="form-row mb-2">
                 <label class="mb-0 col-sm-2" for="name">Name on Card</label>
-                <input type="text" class="form-control col-sm-6" formControlName="name">
+                <input (keyup)="payForm.patchValue({name: $event.target.value.toUpperCase()})"
+                type="text" class="form-control col-sm-6" formControlName="name">
             </div>
             <div class="form-row mb-2">
                 <label class="mb-0 col-sm-2" for="">Card Number</label>
-                <input type="text" class="form-control col-sm-5" formControlName="cardno"
-                    placeholder="16 digit Card Number">
+                <input dobMask digitOnly maxlength="19" type="text" class="form-control col-sm-5" formControlName="cardno"
+                    placeholder="16 digit Card Number" minlength="19">
             </div>
             <div class="form-row">
                 <label class="mb-0 col-sm-2" for="">Expiry Date</label>
-                <input type="text" class="form-control col-sm-2 mb-2" formControlName="expiry" placeholder="MM/YY">
+                <div class="col-sm-2">
+                    <div class="form-group m-0 p-0">
+                        <input digitOnly (keydown)="onKeyDown($event)" (input)="onInputExpiry($event)" type="text"
+                            class="form-control  mb-2" formControlName="expiry" placeholder="MM/YY" maxlength="5">
+                        <div *ngIf="!payForm.get('expiry').valid && payForm.get('expiry').dirty && payForm.get('expiry').touched"
+                            class="alert alert-danger p-0 m-0">
+                            <p class="p-0 m-0">Enter a valid expiry date</p>
+                        </div>
+                        <div *ngIf="monthInvalid && payForm.get('expiry').valid"
+                            class="alert alert-danger p-0 m-0">
+                            <p class="p-0 m-0">Enter a valid Month</p>
+                        </div>
+                    </div>
+                </div>
                 <label class="mb-0 col-sm-2 text-sm-center" for="">CVV</label>
-                <input type="text" class="form-control col-sm-2 mb-2" formControlName="cvv" placeholder="***">
+                <div class="col-sm-2">
+                    <div class="form-group m-0 p-0">
+                        <input digitOnly type="text" class="form-control mb-2" formControlName="cvv" placeholder="***" maxlength="3">
+                        <div *ngIf="!payForm.get('cvv').valid && payForm.get('cvv').touched"
+                            class="alert alert-danger p-0 m-0">
+                            <p class="p-0 m-0">Enter your 3-digit CVV</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-9 col-xs-12">
                 <div class="pay-btn">
-                    <button type="submit" class="btn btn-success">Pay</button> |
+                    <button [disabled]="!payForm.valid || monthInvalid" type="submit" class="btn btn-success">Pay</button> |
                     <button type="button" class="btn btn-danger">Cancel</button>
                 </div>
             </div>

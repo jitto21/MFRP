@@ -8,7 +8,7 @@ import { ConfirmComponent } from './confirm/confirm.component';
 import { AuthGaurd } from '../auth/auth.gaurd';
 
 const homeRoutes: Routes = [{
-    path: '', component: HomeComponent ,
+    path: '', component: HomeComponent ,canActivate: [AuthGaurd],
     children: [
         { path: 'plan', component: PlanComponent },
         { path: 'seat', component: SeatComponent },

@@ -24,3 +24,7 @@
     background-color: rgba(33, 228, 33, 0.5);
     border-radius: 5px;
 }
+.links-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+}

@@ -11,9 +11,11 @@ export class SeatComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    setTimeout(()=> {
-      this.router.navigate(['home/payment'])
-    },3000)
+   
+  }
+
+  onButton() {
+    this.router.navigate(['home/payment']);
   }
 
 }

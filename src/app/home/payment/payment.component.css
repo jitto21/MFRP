@@ -2,3 +2,7 @@
     width: fit-content;
     margin: 0px auto;
 }
+
+input.ng-invalid.ng-touched {
+    border: 2px solid red;
+}

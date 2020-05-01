@@ -21,8 +21,8 @@ export class PlanComponent implements OnInit {
 
   ngOnInit(): void {
     this.planForm = new FormGroup({
-      'from': new FormControl(null, [Validators.required]),
-      'to': new FormControl(null, [Validators.required]),
+      'from': new FormControl('Chennai', [Validators.required]),
+      'to': new FormControl("Bangalore", [Validators.required]),
       'date': new FormControl(null, [Validators.required])
     })
     this.todayDate = this.datePipe.transform(new Date(), "yyyy-MM-dd");

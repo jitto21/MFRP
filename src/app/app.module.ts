@@ -7,10 +7,10 @@ import { AuthComponent } from './auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
 import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './home/header/header.component';
 import { HomeModule } from './home/home.module';
 import { HttpClientModule } from '@angular/common/http';
+import { DigitOnlyDirective } from './digit-only.directive';
+import { DobDirective } from './auto-dash.directive';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     FormsModule,
     HomeModule,
-    HttpClientModule
+    HttpClientModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

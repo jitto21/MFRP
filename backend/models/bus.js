@@ -8,8 +8,8 @@ var busSchema = mongoose.Schema({
     arr: {type:String, required: true},
     date: {type:String, required: true},
     ava: {type:String, required: true},
-    fare: {type:Number, required: true}
-
+    fare: {type:Number, required: true},
+    bookedSeats: {type:[Number], required: true}
 })
 
 module.exports = mongoose.model('Bus', busSchema)

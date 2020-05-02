@@ -1,6 +1,7 @@
 <div class="container">
     <div class="seat-layout">
-        <div class="seat" (click)="onSeatSelect(i+1, $event)" *ngFor="let seat of seatArray;let i=index">
+        <div class="seat" [ngClass]="{'booked-seat':seatArray[i].booked, 'clicked-seat': seatArray[i].clicked}"
+            (click)="onSeatSelect(i+1, $event)" *ngFor="let seat of seatArray;let i=index">
             {{i+1}}
         </div>
     </div>
@@ -11,7 +12,7 @@
                 <p>From : </p>
             </div>
             <div class="col-sm-8">
-
+                {{ bus.from }}
             </div>
         </div>
         <div class="row">
@@ -19,7 +20,7 @@
                 <p>To : </p>
             </div>
             <div class="col-sm-8">
-                
+                {{ bus.to }}
             </div>
         </div>
         <div class="row">
@@ -27,64 +28,80 @@
                 <p>Date : </p>
             </div>
             <div class="col-sm-8">
-                
+                {{ bus.date }}
             </div>
         </div>
-        <div class="seat-user-info" *ngFor="let seatNo of selectedSeatNos;let i=index">
-            <div class="row" *ngIf="seatClicked">
+        <div class="row">
+            <div class="col-sm-4">
+                <p>Type : </p>
+            </div>
+            <div class="col-sm-8">
+                {{ bus.type }}
+            </div>
+        </div>
+        <form  (submit)="onConfirm()">
+            <div class="seat-user-info" *ngFor="let seatNo of selectedSeatNos;let i=index">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="mb-1">Seat No : </p>
+                    </div>
+                    <div class="col-sm-8">
+                        <p class="mb-1">{{ seatNo }}</p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-4 mb-1">
+                        <input class="form-control form-control-sm" type="text" [name]="'name'+i" id="name" placeholder="Name"
+                            >
+                    </div>
+                    <div class="col-sm-3 mb-1">
+                        <input class="form-control form-control-sm ml-1" type="number" min="1" max="100" [name]="'age'+i" id="age"
+                            placeholder="Age" >
+                    </div>
+                    <div class="col-sm-5 mb-1">
+                        <label class="form-check-label mr-2" [for]="'male'+i"><input class="" type="radio"
+                                [name]="'gender'+i" [id]="'male'+i" >Male</label>
+                        <label class="form-check-label" [for]="'female'+i"><input class="" type="radio" [name]="'gender'+i"
+                                [id]="'female'+i">Female</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        <div class="show-on-seat" *ngIf="showSeat">
+            <div class="row">
                 <div class="col-sm-4">
-                    <p class="mb-1">Seat No : </p>
+                    <p>Total Seats : </p>
                 </div>
                 <div class="col-sm-8">
-                    <p class="mb-1">{{ seatNo }}</p>
+                    {{ selectedSeatNos.length }}
                 </div>
             </div>
-            <div class="form-row" *ngIf="seatClicked">
-                <div class="col-sm-4 mb-1">
-                    <input class="form-control form-control-sm" type="text" name="name" id="name" placeholder="Name">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>Fare : </p>
                 </div>
-                <div class="col-sm-3 mb-1">
-                    <input class="form-control form-control-sm ml-1" type="number" min="1" max="100" name="age" id="age" placeholder="Age">
-                </div>
-                <div class="col-sm-5 mb-1">
-                    <label class="form-check-label mr-2" [for]="'male'+i"><input class="" type="radio" [name]="'gender'+i" [id]="'male'+i">Male</label>
-                    <label class="form-check-label" [for]="'female'+i"><input class="" type="radio" [name]="'gender'+i" [id]="'female'+i">Female</label>
+                <div class="col-sm-8">
+                    {{ bus.fare*selectedSeatNos.length}}
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <p>Total Seats : </p>
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>Service Tax : </p>
+                </div>
+                <div class="col-sm-8">
+                    180
+                </div>
             </div>
-            <div class="col-sm-8">
-                {{ selectedSeatNos.length }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <p>Fare : </p>
-            </div>
-            <div class="col-sm-8">
-                
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <p>Service Tax : </p>
-            </div>
-            <div class="col-sm-8">
-                180
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>Total Charges : </p>
+                </div>
+                <div class="col-sm-8">
+                    {{ totalFare }}
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <p>Total Charges : </p>
-            </div>
-            <div class="col-sm-8">
-                
-            </div>
-        </div>
-        <button class="btn-sm btn btn-primary" (click)="onButton()">Confirm</button>
+        <button type="submit" class="btn-sm btn btn-primary">Confirm</button>
     </div>
 </div>
-

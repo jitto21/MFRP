@@ -18,4 +18,20 @@ router.get('/fetch', (req, res, next)=> {
     });
 });
 
+router.post('/book', (req, res, next)=> {
+    console.log(req.body);
+    Bus.findByIdAndUpdate({_id: req.body.id}, {bookedSeats: req.body.seatArr}, {useFindAndModify: false})
+    .then(result=> {
+        res.status(201).json({
+            message: 'Seats Booked'
+        });
+    })
+    .catch(err=> {
+        console.log(err);
+        res.status(500).json({
+            message: 'Error in  Booking'
+        });
+    });
+});
+
 module.exports = router;

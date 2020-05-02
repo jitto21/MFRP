@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -12,31 +12,38 @@ import { UrlService } from '../url.service';
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}]
 
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   isLinkDisbaled: boolean = false;
   disbaleBackBtn: boolean = true;
   url: string = '';
   urlChangedSub: Subscription;
   constructor(private location: Location, private urlService: UrlService) { }
 
-  ngOnInit(): void {
-    this.urlChangedSub = this.urlService.getUrlChanged()
+  ngOnInit() {
+    this.urlChangedSub = this.urlService.getUrlChangedListener()
     .subscribe(resData=> {
+      console.log(resData);
       this.url = resData;
       console.log("Header",this.url);
-      if(!this.url.includes('plan')) {
-        console.log("Not in plan route, hence back button is enabled");
-        this.disbaleBackBtn = false;
-      }
-      else {
-        console.log("In plan route, hence button is disabled")
-        this.disbaleBackBtn = true;
-      }
-    })
+    });
+    this.url = this.urlService.getUrlChanged();
+    console.log("URL: ",this.url);
+    if(!this.url.includes('plan')) {
+      console.log("Not in plan route, hence back button is enabled");
+      this.disbaleBackBtn = false;
+    }
+    else {
+      console.log("In plan route, hence button is disabled")
+      this.disbaleBackBtn = true;
+    }
   }
 
   onGoBack() {
     this.location.back()    
+  }
+
+  ngOnDestroy() {
+    this.urlChangedSub.unsubscribe();
   }
 
 }

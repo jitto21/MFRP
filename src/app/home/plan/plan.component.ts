@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DatePipe, JsonPipe } from '@angular/common';
 import { HomeService } from '../home.service';
 import { HomeModel } from '../home.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-plan',
   templateUrl: './plan.component.html',
   styleUrls: ['./plan.component.css']
 })
-export class PlanComponent implements OnInit {
+export class PlanComponent implements OnInit, OnDestroy {
   planForm: FormGroup;
   todayDate;
   busesArray: HomeModel[] = [];
   showNoBusesMsg: boolean = false;
-
+  busesArraySub: Subscription;
   constructor(private datePipe: DatePipe, private homeService: HomeService,
     private router: Router, private route: ActivatedRoute) { }
 
@@ -36,16 +37,17 @@ export class PlanComponent implements OnInit {
   }
 
   onSubmitPlan() {
-    console.log(this.planForm.value);
-    this.homeService.fetchBusDetails(this.planForm.value.from, this.planForm.value.to, this.planForm.value.date)
-      .subscribe((resData) => {
-        console.log(resData)
-        this.busesArray = resData.buses;
-        if(this.busesArray.length<=0) {
-          this.showNoBusesMsg = true;
-        }
-        console.log(this.busesArray)
-      })
+    this.homeService.fetchBusDetails(this.planForm.value.from, this.planForm.value.to, this.planForm.value.date);
+    this.busesArraySub = this.homeService.getBusesArrayListener()
+    .subscribe(resData=> {
+      console.log(resData);
+      this.busesArray = resData;
+      if(this.busesArray.length<1) {
+        this.showNoBusesMsg = true;
+      } else {
+        this.showNoBusesMsg = false;
+      }
+    })
   }
 
   onClearBusArray() {
@@ -54,8 +56,13 @@ export class PlanComponent implements OnInit {
     this.planForm.reset(); 
   }
 
-  onClickSeats(busDetails: HomeModel) {
+  onViewSeats(busDetails: HomeModel) {
     console.log(busDetails);
+    this.homeService.bus = busDetails;
     this.router.navigate(['home/seat'])
+  }
+
+  ngOnDestroy() {
+    this.busesArraySub.unsubscribe();
   }
 }

@@ -1,0 +1,32 @@
+.container {
+    padding:20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+.seat-layout {
+    display: flex;
+    width: 50%;
+    align-content: start;
+}
+.user-info {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.6);
+    width: 50%;
+    padding: 6px;
+}
+.seat-layout {
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 50vh;
+}
+.seat {
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    width: 6%;
+    height: 7%;
+    margin: 5px;
+    background-color: rgba(0, 0, 0, 0.3);   
+}

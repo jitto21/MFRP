@@ -20,14 +20,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private location: Location, private urlService: UrlService) { }
 
   ngOnInit() {
+    this.url = this.urlService.getUrlChanged();
+    console.log("URL: ",this.url);
+    this.checkUrlPath();
     this.urlChangedSub = this.urlService.getUrlChangedListener()
     .subscribe(resData=> {
       console.log(resData);
       this.url = resData;
       console.log("Header",this.url);
+      this.checkUrlPath();
     });
-    this.url = this.urlService.getUrlChanged();
-    console.log("URL: ",this.url);
+    
+  }
+
+  private checkUrlPath () {
     if(!this.url.includes('plan')) {
       console.log("Not in plan route, hence back button is enabled");
       this.disbaleBackBtn = false;

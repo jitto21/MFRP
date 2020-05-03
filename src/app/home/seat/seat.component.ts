@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomeModel } from '../home.model';
 import { HomeService } from '../home.service';
-import { FormArray, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-seat',
@@ -53,38 +53,48 @@ export class SeatComponent implements OnInit {
     { value: 39, clicked: false, booked: false },
     { value: 40, clicked: false, booked: false }
   ];
-  bus: HomeModel;
+  bus: HomeModel = null;
+  noBusDetails: boolean;
   totalFare: number = 0;
   selectedSeatNos: number[] = [];
   seatForm: FormGroup;
   showSeat: boolean = false;
 
+  get seatDetails() {
+    return this.seatForm.get('seatDetails') as FormArray;
+  }
+
   constructor(private router: Router, private homeService: HomeService,
     private formBuilder: FormBuilder) {
-      this.seatForm = this.formBuilder.group({
-        seatFormArray: this.formBuilder.array([])
-      });
+     
   }
 
   ngOnInit() {
+    this.seatForm = this.formBuilder.group({
+      seatDetails: this.formBuilder.array([])
+    })
     this.selectedSeatNos = [];
     this.bus = this.homeService.getViewSeats();
-    this.totalFare = this.bus.fare + 180;
-    if (this.bus.bookedSeats.length > 0) {
-      this.seatArray.forEach((elt, i) => {
-        this.bus.bookedSeats.map(no => {
-          if (elt.value == no) {
-            console.log("Match at pos: ", i);
-            this.seatArray[i].booked = true;
-          }
+    console.log(this.bus);
+    if(!this.bus) {
+      console.log("no bus details")
+      this.noBusDetails = true;
+    } else {
+      this.noBusDetails = false;
+      this.totalFare = this.bus.fare + 180;
+      if (this.bus.bookedSeats.length > 0) {
+        this.seatArray.forEach((elt, i) => {
+          this.bus.bookedSeats.map(no => {
+            if (elt.value == no) {
+              // console.log("Match at pos: ", i);
+              this.seatArray[i].booked = true;
+            }
+          })
         })
-      })
+      }
     }
+    
     console.log(this.seatArray);
-  }
-
-  get seatFormArray() {
-    return this.seatForm.get('seatFormArray') as FormArray;
   }
 
   onSeatSelect(seatIndex, event) {
@@ -94,10 +104,26 @@ export class SeatComponent implements OnInit {
     console.log(this.seatArray[seatIndex - 1].clicked);
     if (this.seatArray[seatIndex - 1].clicked) { //push to array;
       this.selectedSeatNos.push(seatIndex);
+      this.seatDetails.push(this.formBuilder.group({
+        name: this.formBuilder.control('', Validators.required),
+        age: this.formBuilder.control('', Validators.required),
+        gender: this.formBuilder.control('', Validators.required),
+        seatNo: this.formBuilder.control(seatIndex)
+      }));
+      console.log(this.seatForm);
     } else { //remove from array
       this.selectedSeatNos = this.selectedSeatNos.filter(val => {
        return val !== seatIndex;
       })
+      let control =<FormArray> this.seatForm.controls['seatDetails'];
+      for(let i=0;i<this.selectedSeatNos.length;i++) {
+        if(control.value[i].seatNo == seatIndex) {
+          console.log("Match Found : ",this.seatForm.controls['seatDetails'].value[i]);
+          control.removeAt(i);
+          return;
+        }
+      }
+      // console.log(this.seatForm.controls['seatDetails'].value[0].seatNo);
     }
     if(this.selectedSeatNos.length > 0) {
       this.showSeat = true;
@@ -109,8 +135,8 @@ export class SeatComponent implements OnInit {
 
   onConfirm() {
     console.log("Confirm: ", this.bus);
-    console.log(this.seatForm.value);
     this.homeService.bookBus(this.bus._id, this.selectedSeatNos);
+    console.log(this.seatForm.value);
     this.router.navigate(['home/payment']);
   }
 

@@ -19,8 +19,8 @@ router.get('/fetch', (req, res, next)=> {
 });
 
 router.post('/book', (req, res, next)=> {
-    console.log(req.body);
-    Bus.findByIdAndUpdate({_id: req.body.id}, {bookedSeats: req.body.seatArr}, {useFindAndModify: false})
+    console.log(req.body.seatArr);
+    Bus.findByIdAndUpdate({_id: req.body.id}, {$push: {bookedSeats: {$each: req.body.seatArr}}})
     .then(result=> {
         res.status(201).json({
             message: 'Seats Booked'

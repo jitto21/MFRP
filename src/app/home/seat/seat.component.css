@@ -1,13 +1,18 @@
 .container {
-    padding:20px;
+    padding:20px; 
+}
+.show-bus-details {
     display: flex;
     justify-content: center;
     flex-direction: row;
 }
 .seat-layout {
     display: flex;
-    width: 50%;
-    align-content: start;
+    width: 40%;
+    margin-right: 5%;
+    align-content: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
 }
 .user-info {
     border-radius: 10px;
@@ -24,18 +29,26 @@
     font-weight: bold;
     cursor: pointer;
     text-align: center;
-    width: 6%;
+    width: 8%;
     height: 7%;
     margin: 5px;
-    color:green;
-    background-color: rgb(255, 255, 255);  
+    background-image: url('../../bus-bookingw.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* color:green;
+    background-color: rgb(255, 255, 255);   */
 }
 .booked-seat {
     color: rgba(255, 255, 255, 0.2);
-    cursor:none;
-    background-color: rgba(24, 23, 23, 0.3);    
+    cursor:not-allowed;
+    background-color: rgba(24, 23, 23, 0.6);    
 }
 .clicked-seat {
-    color:white;
-    background-color:green;       
+    /* color:white;
+    background-color:green;    */
+    background-image: url('../../bus-bookingg.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }

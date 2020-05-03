@@ -11,13 +11,15 @@ import { CommonModule, DatePipe, Location, LocationStrategy, PathLocationStrateg
 import { UrlService } from './url.service';
 import { DigitOnlyDirective } from '../digit-only.directive';
 import { DobDirective } from '../auto-dash.directive';
+import { MaterialModule } from '../material-module';
 
 @NgModule({
     imports: [
         HomeRoutingModule,
         ReactiveFormsModule,
         CommonModule,
-        FormsModule
+        FormsModule,
+        MaterialModule
     ],
     declarations:[
         HomeComponent,

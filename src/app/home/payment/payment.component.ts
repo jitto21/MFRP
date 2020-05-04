@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { HomeService } from '../home.service';
 
 @Component({
   selector: 'app-payment',
@@ -16,7 +17,7 @@ export class PaymentComponent implements OnInit {
   monthInvalid: boolean = false;
   backspacePressed: boolean;
   backspaceCard: boolean;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private homeService: HomeService) { }
 
   ngOnInit(): void {
     this.payForm = new FormGroup({
@@ -90,6 +91,6 @@ export class PaymentComponent implements OnInit {
   // }
 
   onPayFormSubmit() {
-    this.router.navigate(['home/confirm']);
+    this.homeService.bookBus();
   }
 }

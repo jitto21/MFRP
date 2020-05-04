@@ -14,7 +14,7 @@ export class AuthGaurd implements CanActivate {
             return true;
         }
         alert('Please login to access this page');
-        return this.router.createUrlTree(['']);
+        return this.router.createUrlTree(['auth']);
     }
 
 }

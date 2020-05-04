@@ -63,6 +63,8 @@ export class PlanComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.busesArraySub.unsubscribe();
+    if(this.showNoBusesMsg) {
+      this.busesArraySub.unsubscribe();
+    }
   }
 }

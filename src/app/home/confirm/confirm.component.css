@@ -1,0 +1,22 @@
+.ticket {
+    width: 80%;
+    margin: 0px auto;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 2px dashed black;
+}
+
+.ticket h4 {
+    font-size: 1.6rem;
+}
+
+ul {
+    list-style-type: none;
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+}
+
+.book-again-btn {
+    width: fit-content;
+    margin: 0px auto;
+}

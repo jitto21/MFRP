@@ -28,3 +28,7 @@
     cursor: not-allowed;
     pointer-events: none;
 }
+.back-btn {
+    width: fit-content;
+    margin-left: auto;
+}

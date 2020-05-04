@@ -9,8 +9,7 @@ import { MaterialModule } from './material-module';
 import { FormsModule } from '@angular/forms';
 import { HomeModule } from './home/home.module';
 import { HttpClientModule } from '@angular/common/http';
-import { DigitOnlyDirective } from './digit-only.directive';
-import { DobDirective } from './auto-dash.directive';
+import { DirectiveModule } from './directives/directive.module';
 
 @NgModule({
   declarations: [
@@ -25,9 +24,9 @@ import { DobDirective } from './auto-dash.directive';
     FormsModule,
     HomeModule,
     HttpClientModule,
-    
+    DirectiveModule  
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

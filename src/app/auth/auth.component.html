@@ -56,8 +56,7 @@
                             <div class="input-group-text">+91</div>
                         </div>
                         <input pattern="[1-9]{1}[0-9]{9}" type="tel" minlength="10" maxlength="10" required
-                            placeholder="Phone number" class="form-control mt-0" name="phone" required ngModel
-                            #phone="ngModel">
+                            placeholder="Phone number" class="form-control mt-0" name="phone" ngModel #phone="ngModel">
                     </div>
                     <div *ngIf="phone.invalid && phone.touched">
                         <div role="alert" class="alert alert-danger p-0">
@@ -65,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" required value="Male" type="radio" name="gender" ngModel
@@ -84,8 +83,22 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <input pattern="[a-z]*@[a-z]*.[a-z]*" type="email" required placeholder="Email Id"
-                        class="form-control" name="emailSignup" ngModel #emailSignup="ngModel">
+                    <input dobDash type="text" required placeholder="DOB: dd/mm/yyyy" class="form-control" 
+                    name="dob" ngModel #dob="ngModel">
+                    <div *ngIf="dob.invalid && dob.touched">
+                        <div role="alert" class="alert alert-danger p-0">
+                            <p class="p-1 m-0">Enter a valid Date of Birth</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input pattern="[^@\s]+@[^@\s]+\.[^@\s]+" type="text" required
+                        placeholder="Email Id" class="form-control" name="emailSignup" ngModel #emailSignup="ngModel">
+                    <div *ngIf="emailSignup.invalid && emailSignup.touched">
+                        <div role="alert" class="alert alert-danger p-0">
+                            <p class="p-1 m-0">Enter a valid email address</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <input [type]="showPass? 'text' : 'password' " required placeholder="Password"

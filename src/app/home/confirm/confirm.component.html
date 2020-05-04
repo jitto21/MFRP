@@ -1,1 +1,25 @@
-<p>confirm works!</p>
+<div class="container">
+    <div class="ticket" *ngIf="busTicket">
+        <h4 class="text-center">Bus Ticket</h4>
+        <ul>
+            <li>Pickup: {{ busTicket.from }}</li>
+            <li>Departure Time: {{ busTicket.dep }}</li>
+            <span *ngFor="let seat of seatDetails">
+                <li>Name: {{ seat.name }}</li>
+                <li>Gender: {{ seat.gender }}</li>
+                <li>SeatNo: {{ seat.seatNo }}</li>
+            </span>
+            <li>Destination: {{ busTicket.to }}</li>
+            <li>Arrival Time: {{ busTicket.arr }}</li>
+            <li>Route:</li>
+            <li>Date: {{ busTicket.date }}</li>
+            <li>Fare: {{ busTicket.fare }}</li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="btn-wrapper m-2">
+        <div class="book-again-btn">
+            <button matTooltip="Goto Plan your travel" class="btn-sm btn btn-success" (click)="onBookAgain()" type="button">Book Again</button>
+        </div>
+    </div>
+</div>

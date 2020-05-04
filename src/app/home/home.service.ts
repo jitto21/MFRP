@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HomeModel } from './home.model';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -9,8 +10,31 @@ import { Subject } from 'rxjs';
 export class HomeService {
     bus: HomeModel;
     busesArray: HomeModel[];
-    private busesArrayListener = new Subject<HomeModel[]>()
-    constructor(private http: HttpClient) {}
+    private busesArrayListener = new Subject<HomeModel[]>();
+    private seatFormDetails: any;
+    private seatDetails: any;
+    constructor(private http: HttpClient, private router: Router) {}
+
+    getBusTicket() {
+        return {
+            from: this.bus.from,
+            to: this.bus.to,
+            dep: this.bus.dep,
+            arr: this.bus.arr,
+            fare: this.bus.fare,
+            date: this.bus.date,
+            seatForm: this.seatFormDetails
+        }
+    }
+
+    saveSeatDetails(id: string, seatArr: number[],seatForm) {  //save seat Details before payment is done
+        this.seatFormDetails  = seatForm;
+        this.seatDetails = {
+            id: id,
+            seatArr: seatArr
+        };
+        console.log("Saved in Service: ",this.seatDetails);
+    }
 
     getBusesArrayListener() {
         return this.busesArrayListener.asObservable();
@@ -30,14 +54,15 @@ export class HomeService {
           })
     }
 
-    bookBus(id: string, selectedSeatNos: number[]) {
-        let bookBusObj ={
-            id: id,
-            seatArr: selectedSeatNos 
-        }
-        this.http.post('http://localhost:3000/bus/book', bookBusObj)
+    bookBus() {
+        // let bookBusObj ={
+        //     id: id,
+        //     seatArr: selectedSeatNos 
+        // }
+        this.http.post('http://localhost:3000/bus/book', this.seatDetails)
         .subscribe(resData=> {
             console.log(resData);
+            this.router.navigate(['home/confirm']);
         })
     }
 }

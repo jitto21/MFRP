@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private checkUrlPath () {
-    if(!this.url.includes('plan')) {
+    if(this.url.includes('payment') || this.url.includes('seat')) {
       console.log("Not in plan route, hence back button is enabled");
       this.disbaleBackBtn = false;
     }

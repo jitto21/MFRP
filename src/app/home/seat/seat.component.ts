@@ -97,11 +97,13 @@ export class SeatComponent implements OnInit {
     console.log(this.seatArray);
   }
 
-  onSeatSelect(seatIndex, event) {
-    console.log(event);
-    // this.seatClicked = true;
+  onSeatSelect(seatIndex) {
+    if(this.seatArray[seatIndex-1].booked == true) {
+      console.log("this seat is Booked !!")
+      return;
+    }
     this.seatArray[seatIndex - 1].clicked = !this.seatArray[seatIndex - 1].clicked; //toggle
-    console.log(this.seatArray[seatIndex - 1].clicked);
+    console.log("Selected: "+this.seatArray[seatIndex - 1].clicked);
     if (this.seatArray[seatIndex - 1].clicked) { //push to array;
       this.selectedSeatNos.push(seatIndex);
       this.seatDetails.push(this.formBuilder.group({
@@ -110,19 +112,24 @@ export class SeatComponent implements OnInit {
         gender: this.formBuilder.control('', Validators.required),
         seatNo: this.formBuilder.control(seatIndex)
       }));
-      console.log(this.seatForm);
-    } else { //remove from array
-      this.selectedSeatNos = this.selectedSeatNos.filter(val => {
-       return val !== seatIndex;
-      })
+      console.log(this.seatForm.controls['seatDetails'].value);
+    } else { //remove from array and Form Array
+      console.log("Remove seat, ",seatIndex);
       let control =<FormArray> this.seatForm.controls['seatDetails'];
-      for(let i=0;i<this.selectedSeatNos.length;i++) {
+      for(let i=0;i<=this.selectedSeatNos.length;i++) {
+        console.log(control.value[i])
         if(control.value[i].seatNo == seatIndex) {
           console.log("Match Found : ",this.seatForm.controls['seatDetails'].value[i]);
           control.removeAt(i);
-          return;
+          break;
         }
       }
+      console.log("****After Removal****")
+      console.log(control.value);
+      this.selectedSeatNos = this.selectedSeatNos.filter(val => {
+        return val !== seatIndex;
+       })
+       console.log(this.selectedSeatNos);
       // console.log(this.seatForm.controls['seatDetails'].value[0].seatNo);
     }
     if(this.selectedSeatNos.length > 0) {
@@ -135,7 +142,8 @@ export class SeatComponent implements OnInit {
 
   onConfirm() {
     console.log("Confirm: ", this.bus);
-    this.homeService.bookBus(this.bus._id, this.selectedSeatNos);
+    // this.homeService.bookBus(this.bus._id, this.selectedSeatNos);
+    this.homeService.saveSeatDetails(this.bus._id, this.selectedSeatNos, this.seatForm.value);
     console.log(this.seatForm.value);
     this.router.navigate(['home/payment']);
   }

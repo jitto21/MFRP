@@ -9,9 +9,9 @@ import { ConfirmComponent } from './confirm/confirm.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule, DatePipe, Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { UrlService } from './url.service';
-import { DigitOnlyDirective } from '../digit-only.directive';
-import { DobDirective } from '../auto-dash.directive';
+import { DigitOnlyDirective } from '../directives/digit-only.directive';
 import { MaterialModule } from '../material-module';
+import { DirectiveModule } from '../directives/directive.module';
 
 @NgModule({
     imports: [
@@ -19,7 +19,8 @@ import { MaterialModule } from '../material-module';
         ReactiveFormsModule,
         CommonModule,
         FormsModule,
-        MaterialModule
+        MaterialModule,
+        DirectiveModule
     ],
     declarations:[
         HomeComponent,
@@ -27,9 +28,7 @@ import { MaterialModule } from '../material-module';
         PlanComponent,
         SeatComponent,
         PaymentComponent,
-        ConfirmComponent,
-        DigitOnlyDirective,
-        DobDirective
+        ConfirmComponent
     ],
     providers: [
         DatePipe,

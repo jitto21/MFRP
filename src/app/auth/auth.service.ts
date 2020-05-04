@@ -109,6 +109,7 @@ export class AuthService {
     }
 
     logout() {
+        this.router.navigate(['auth']);
         console.log("logout called");
         alert("Logged Out")
         this.authStateListener.next(false);
@@ -116,7 +117,6 @@ export class AuthService {
         this.token = null;
         clearTimeout(this.logoutTimer);
         this.deleteAuthData();
-        this.router.navigate(['']);
     }
 
     saveAuthData(token: string, expirationDate: Date, fname: string, lname: string) {

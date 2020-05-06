@@ -1,7 +1,7 @@
 <div class="container">
     <div class="show-bus-details row" *ngIf="!noBusDetails">
         <div class="seat-layout col-sm-3 col-8 mb-2">
-            <div [matTooltip]="i+1" class="seat"
+            <div [matTooltip]="seat.value" class="seat"
                 [ngClass]="{'booked-seat':seatArray[i].booked, 'clicked-seat': seatArray[i].clicked}"
                 (click)="onSeatSelect(i+1)" *ngFor="let seat of seatArray;let i=index">
             </div>
@@ -34,10 +34,10 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 col-6">
-                    <p>Type : </p>
+                    <p>Bus : </p>
                 </div>
                 <div class="col-sm-8 col-6">
-                    {{ bus.type }}
+                    {{ bus.name }}, {{ bus.type }}
                 </div>
             </div>
             <form [formGroup]="seatForm" (submit)="onConfirm()">
@@ -52,23 +52,29 @@
                         </div>
                     </div>
                     <div class="form-row" [formGroupName]="i">
-                        <div class="col-sm-4 col-6 mb-1">
+                        <div class="col-sm-4 col-6 mb-0">
+                            <label class="text-primary ml-1 mb-0" for="name">Name</label>
                             <input class="form-control ml-1 form-control-sm" type="text" id="name" placeholder="Name"
                                 formControlName="name">
                         </div>
                         <div class="col-sm-3 col-4 mb-1">
+                            <label class="text-primary ml-1 mb-0" for="name">Age</label>
                             <input class="form-control form-control-sm ml-1" type="number" min="1" max="100" id="age"
                                 formControlName="age" placeholder="Age">
                         </div>
-                        <div class="col-sm-5 mb-1">
-                            <label class="form-check-label mr-2"><input class="" type="radio" [id]="'male'+i"
-                                    formControlName="gender" value="male">Male</label>
-                            <label class="form-check-label" [for]="'gender'+i"><input class="" type="radio"
-                                    [id]="'female'+i" formControlName="gender" value="female">Female</label>
+                        <div class="col-sm-5 mb-1 pb-1 align-self-end">
+                            <label class="form-check-label mr-2 text-primary"><input class="" type="radio" [id]="'male'+i"
+                                    formControlName="gender" value="Male">Male</label>
+                            <label class="form-check-label text-primary" [for]="'gender'+i"><input class="" type="radio"
+                                    [id]="'female'+i" formControlName="gender" value="Female">Female</label>
                         </div>
                     </div>
+                    <div *ngIf="i===0" class="self-booking mt-0 mb-1">
+                        <label class="form-check-label" for="self">Booking For Yourself ?
+                            <input (change)="onSelfClicked($event)" id="self" type="checkbox">
+                        </label>
+                    </div>
                 </div>
-
                 <div class="show-on-seat" *ngIf="showSeat">
                     <div class="row">
                         <div class="col-sm-4 col-6">
@@ -103,7 +109,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" [disabled]="seatForm.invalid || selectedSeatNos.length<=0"
+                <button *ngIf="showSeat" type="submit" [disabled]="seatForm.invalid || selectedSeatNos.length<=0"
                     class="btn-sm btn btn-primary">Confirm</button>
             </form>
         </div>

@@ -3,12 +3,16 @@
         <form [formGroup]="planForm" (submit)="onSubmitPlan()">
             <div class="form-row">
                 <div class="col-sm-4">
-                    <label for="" class="m-0">From</label>
-                    <input class="form-control  mb-2" type="text" formControlName='from'>
+                    <label for="from" class="m-0">From</label>
+                    <select class="form-control mb-2" id="from" formControlName='from'>
+                        <option *ngFor="let city of fromCities" [value]="city">{{ city }}</option>
+                    </select>
                 </div>
                 <div class="col-sm-4">
-                    <label for="" class="m-0">To</label>
-                    <input class="form-control  mb-2" type="text" formControlName='to'>
+                    <label for="to" class="m-0">To</label>
+                    <select class="form-control mb-2" id="to" formControlName='to'>
+                        <option *ngFor="let city of fromCities" [value]="city">{{ city }}</option>
+                    </select>
                 </div>
                 <div class="col-sm-3">
                     <label for="" class="m-0">Date</label>
@@ -40,14 +44,15 @@
             <tbody>
                 <tr *ngFor="let bus of busesArray; let i=index">
                     <th scope="row">{{i+1}}</th>
-                    <td>{{bus.type}}</td>
+                    <td>{{bus.name }}, {{ bus.type}}</td>
                     <td>{{bus.dep}}</td>
                     <td>{{bus.arr}}</td>
                     <td>{{bus.date}}</td>
                     <td>{{bus.ava}}</td>
                     <td>{{bus.fare}}</td>
                     <td>
-                        <button type="button" (click)="onViewSeats(bus)" class="btn btn-sm btn-success">View Seats</button>
+                        <button [disabled]="viewSeatsDisabled[i]" type="button" (click)="onViewSeats(bus)" 
+                        class="btn btn-sm btn-success">View Seats</button>
                     </td>
                 </tr>
             </tbody>

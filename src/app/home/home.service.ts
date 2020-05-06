@@ -13,10 +13,12 @@ export class HomeService {
     private busesArrayListener = new Subject<HomeModel[]>();
     private seatFormDetails: any;
     private seatDetails: any;
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router) { }
 
     getBusTicket() {
         return {
+            name: this.bus.name,
+            type: this.bus.type,
             from: this.bus.from,
             to: this.bus.to,
             dep: this.bus.dep,
@@ -27,13 +29,13 @@ export class HomeService {
         }
     }
 
-    saveSeatDetails(id: string, seatArr: number[],seatForm) {  //save seat Details before payment is done
-        this.seatFormDetails  = seatForm;
+    saveSeatDetails(id: string, seatArr: number[], seatForm) {  //save seat Details before payment is done
+        this.seatFormDetails = seatForm;
         this.seatDetails = {
             id: id,
             seatArr: seatArr
         };
-        console.log("Saved in Service: ",this.seatDetails);
+        console.log("Saved in Service: ", this.seatDetails);
     }
 
     getBusesArrayListener() {
@@ -45,13 +47,13 @@ export class HomeService {
     }
 
     fetchBusDetails(from: string, to: string, date: string) {
-        this.http.get<{message: string, buses: HomeModel[]}>(`http://localhost:3000/bus/fetch?from=${from}&to=${to}&date=${date}`)
-        .subscribe((resData) => {
-            console.log(resData);
-            this.busesArray = resData.buses;
-            this.busesArrayListener.next(this.busesArray);
-            console.log(this.busesArray)
-          })
+        this.http.get<{ message: string, buses: HomeModel[] }>(`http://localhost:3000/bus/fetch?from=${from}&to=${to}&date=${date}`)
+            .subscribe((resData) => {
+                console.log(resData);
+                this.busesArray = resData.buses;
+                this.busesArrayListener.next(this.busesArray);
+                console.log(this.busesArray)
+            })
     }
 
     bookBus() {
@@ -60,9 +62,9 @@ export class HomeService {
         //     seatArr: selectedSeatNos 
         // }
         this.http.post('http://localhost:3000/bus/book', this.seatDetails)
-        .subscribe(resData=> {
-            console.log(resData);
-            this.router.navigate(['home/confirm']);
-        })
+            .subscribe(resData => {
+                console.log(resData);
+                this.router.navigate(['home/confirm']);
+            })
     }
 }

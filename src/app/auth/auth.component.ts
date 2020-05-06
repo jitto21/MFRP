@@ -18,14 +18,18 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onShowPass() {
-   this.showPass = !this.showPass;
-   console.log("showPass: ",this.showPass);
+  onShowPass(event) {
+    this.showPass = event.target.checked;
+    console.log("showPass: ", this.showPass);
 
   }
   onCreateUser(form) {
-    console.log(form.value);
-    this.authService.signup(form.value);
+    let dateString = form.value.dob;
+    var dateParts = dateString.split('/');
+    var dob = new Date(+dateParts[2], +dateParts[1]-1, +dateParts[0]);
+    let age = (new Date((Date.now() - dob.getTime())).getUTCFullYear() -1970);
+    console.log(age);
+    this.authService.signup(form.value, age);
 
   }
   onLoginUser(form) {

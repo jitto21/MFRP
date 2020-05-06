@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HomeModel } from '../home.model';
 import { HomeService } from '../home.service';
 import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-seat',
@@ -52,6 +53,7 @@ export class SeatComponent implements OnInit {
     { value: 38, clicked: false, booked: false },
     { value: 39, clicked: false, booked: false },
     { value: 40, clicked: false, booked: false }
+
   ];
   bus: HomeModel = null;
   noBusDetails: boolean;
@@ -59,13 +61,15 @@ export class SeatComponent implements OnInit {
   selectedSeatNos: number[] = [];
   seatForm: FormGroup;
   showSeat: boolean = false;
+  viewSeatsDisabled: boolean = false;
+  driverSeat:number[] = [1,2,3,4];
 
   get seatDetails() {
     return this.seatForm.get('seatDetails') as FormArray;
   }
 
   constructor(private router: Router, private homeService: HomeService,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder, private authService: AuthService) {
      
   }
 
@@ -95,6 +99,21 @@ export class SeatComponent implements OnInit {
     }
     
     console.log(this.seatArray);
+  }
+
+  onSelfClicked(event) {
+    console.log(event.target.checked);
+    console.log(this.seatForm.controls['seatDetails'].value[0]);
+    if(event.target.checked) {
+      let loggedInUser = this.authService.getLoggedInUser()
+     this.seatDetails.patchValue([
+       {name: loggedInUser.fname+' '+loggedInUser.lname, age: loggedInUser.age}
+     ])
+    } else {
+      this.seatDetails.patchValue([
+        {name: '', age: ''}
+      ])
+    }
   }
 
   onSeatSelect(seatIndex) {

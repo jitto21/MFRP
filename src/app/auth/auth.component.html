@@ -104,7 +104,7 @@
                     <input [type]="showPass? 'text' : 'password' " required placeholder="Password"
                         [(ngModel)]="passInput" class="form-control" name="passSignup" ngModel #passSignup="ngModel">
                     <div class="form-check" style="width: fit-content;">
-                        <label (click)="onShowPass()" class="form-check-label">
+                        <label (click)="onShowPass($event)" class="form-check-label">
                             <input class="form-check-input" type="checkbox">Show password
                         </label>
                     </div>
@@ -123,10 +123,11 @@
                     </div>
                 </div>
                 <div class="signup-btn">
-                    <button [disabled]="signupForm.invalid || passInput!==repassInput" class=" btn btn-success"
+                    <button  class=" btn btn-success" [disabled]="signupForm.invalid || passInput!==repassInput"
                         type="submit">Signup</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+

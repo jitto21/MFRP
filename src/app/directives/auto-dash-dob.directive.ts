@@ -17,7 +17,7 @@ if (trimmed.length > 10) {
 }
 
 
-trimmed = trimmed.replace(/-/g,''); //avoid dash from users
+trimmed = trimmed.replace(/\//g,''); //avoid slash from users
 
  let numbers = [];
 
@@ -28,7 +28,7 @@ trimmed = trimmed.replace(/-/g,''); //avoid dash from users
  if(trimmed.substr(4,4)!="" && +trimmed.substr(4,4)<=2020)
  numbers.push(trimmed.substr(4,4));
 
-input.value = numbers.join('-');
+input.value = numbers.join('/');
 
   }
 }

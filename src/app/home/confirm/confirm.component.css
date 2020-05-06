@@ -1,12 +1,13 @@
 .ticket {
-    width: 80%;
+    width: 100%;
     margin: 0px auto;
-    background-color: rgba(255, 255, 255, 0.7);
-    border: 2px dashed black;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    border: 1px solid black;
 }
 
 .ticket h4 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
 }
 
 ul {
@@ -19,4 +20,19 @@ ul {
 .book-again-btn {
     width: fit-content;
     margin: 0px auto;
+}
+
+.passenger  {
+    font-size: 0.8rem;
+}
+
+.main, .other {
+    font-size: 0.9rem;
+    border-radius: 5px;
+    width: 95%;
+    margin: 4px auto;;
+}
+.other thead tr {
+    color:rgb(26, 178, 255);
+    text-decoration: underline;
 }

@@ -1,9 +1,10 @@
 export interface AuthSignupModel {
-    id?: string;
+    _id?: string;
     fname: string;
     lname: string;
     phone: number;
     gender: string;
+    age?: number;
     email: string;
     pass: string;
 }

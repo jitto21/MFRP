@@ -1,5 +1,6 @@
 export interface HomeModel {
     _id: string;
+    name: string;
     from: string;
     to: string;
     type: string;

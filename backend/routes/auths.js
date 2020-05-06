@@ -14,6 +14,7 @@ router.post('/signup', (req, res, next) => {
                 lname: req.body.lname,
                 phone: req.body.phone,
                 gender: req.body.gender,
+                age: req.body.age,
                 email: req.body.email,
                 pass: hashPass
             });
@@ -66,7 +67,8 @@ router.post('/login', (req, res, next) => {
                         token: token,
                         expiresIn: 3600,
                         fname: user.fname,
-                        lname: user.lname
+                        lname: user.lname,
+                        age: user.age
                     })
                 })
                 .catch(err => {

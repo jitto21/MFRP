@@ -2,7 +2,8 @@
     <div class="show-bus-details row" *ngIf="!noBusDetails">
         <div class="seat-layout col-sm-3 col-8 mb-2">
             <div [matTooltip]="seat.value" class="seat"
-                [ngClass]="{'booked-seat':seatArray[i].booked, 'clicked-seat': seatArray[i].clicked}"
+                [ngClass]="{'booked-seat':seatArray[i].booked, 'seat-center-gap': i>=20 && i<=29,
+                'clicked-seat': seatArray[i].clicked, 'seat-normal': i<20 || i>29}"
                 (click)="onSeatSelect(i+1)" *ngFor="let seat of seatArray;let i=index">
             </div>
         </div>

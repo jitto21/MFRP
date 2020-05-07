@@ -12,14 +12,15 @@ export class PaymentComponent implements OnInit {
   payForm: FormGroup;
   month = "12";
   value: any;
-  i: number = 0;
-  backspace: number = 0;
+  seatDetails: any;
   monthInvalid: boolean = false;
   backspacePressed: boolean;
-  backspaceCard: boolean;
+  showPayment: boolean = false;
   constructor(private router: Router, private homeService: HomeService) { }
 
   ngOnInit(): void {
+    this.seatDetails = this.homeService.getSeatDetails();
+    this.showPayment = this.seatDetails? true: false
     this.payForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       cardno: new FormControl(null, [Validators.required]),
@@ -32,7 +33,6 @@ export class PaymentComponent implements OnInit {
         Validators.required,
         Validators.maxLength(5),
         Validators.minLength(5),
-        // this.ValidateMonth
       ]),
     })
   }
@@ -65,30 +65,6 @@ export class PaymentComponent implements OnInit {
         }
       })
   }
-
-  // OnKeyDownName(keyValue) {
-  //   if (keyValue.key == "Backspace") {
-  //     this.backspace++;
-  //     console.log("backspace ",this.backspace);
-  //     if(this.backspace%4==0) {
-  //       this.backspace = 0;
-  //       this.i--;
-  //       console.log(this.i);
-  //     }
-  //     return;
-  //   } else {
-  //     let cardno = this.payForm.get('cardno').value;
-  //     let cardnoLength = cardno.length;
-  //     console.log("Card Length ", cardnoLength);
-  //     if ((cardnoLength-this.i) % 4 == 0 && ) {
-  //       this.i++;
-  //       console.log(this.i);
-  //       if(cardno.length != 0 && cardno.length < 19) {
-  //         this.payForm.get('cardno').patchValue(cardno + '-');
-  //       }
-  //     }
-  //   }
-  // }
 
   onPayFormSubmit() {
     this.homeService.bookBus();

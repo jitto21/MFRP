@@ -8,8 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material-module';
 import { FormsModule } from '@angular/forms';
 import { HomeModule } from './home/home.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DirectiveModule } from './directives/directive.module';
+import { ErrorComponent } from './error/error.component';
+import { ErrorInterceptor } from './error/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,14 @@ import { DirectiveModule } from './directives/directive.module';
     HttpClientModule,
     DirectiveModule  
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

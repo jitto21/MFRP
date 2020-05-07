@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="pay-form">
+    <div class="pay-form" *ngIf="showPayment">
         <h4>Enter your Payment Details</h4>
         <form [formGroup]="payForm" (submit)="onPayFormSubmit()">
             <div class="form-row mb-2">
@@ -46,5 +46,10 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div *ngIf="!showPayment" class="error-msg">
+        <div class="alert alert-warning">
+            Go Back to Plan Your Journey
+        </div>
     </div>
 </div>

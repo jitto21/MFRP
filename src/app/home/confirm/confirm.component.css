@@ -24,13 +24,15 @@ ul {
 
 .passenger  {
     font-size: 0.8rem;
+    width: 90%;
+    margin: 4px auto;
 }
 
 .main, .other {
     font-size: 0.9rem;
     border-radius: 5px;
     width: 95%;
-    margin: 4px auto;;
+    margin: 4px auto;
 }
 .other thead tr {
     color:rgb(26, 178, 255);

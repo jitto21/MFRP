@@ -13,6 +13,7 @@ export class HomeService {
     private busesArrayListener = new Subject<HomeModel[]>();
     private seatFormDetails: any;
     private seatDetails: any;
+    private date: string = '';
     constructor(private http: HttpClient, private router: Router) { }
 
     getBusTicket() {
@@ -24,7 +25,7 @@ export class HomeService {
             dep: this.bus.dep,
             arr: this.bus.arr,
             fare: this.bus.fare,
-            date: this.bus.date,
+            date: this.date,
             seatForm: this.seatFormDetails
         }
     }
@@ -38,6 +39,10 @@ export class HomeService {
         console.log("Saved in Service: ", this.seatDetails);
     }
 
+    getSeatDetails() {
+        return this.seatDetails;
+    }
+
     getBusesArrayListener() {
         return this.busesArrayListener.asObservable();
     }
@@ -47,6 +52,7 @@ export class HomeService {
     }
 
     fetchBusDetails(from: string, to: string, date: string) {
+        this.date = date;
         this.http.get<{ message: string, buses: HomeModel[] }>(`http://localhost:3000/bus/fetch?from=${from}&to=${to}&date=${date}`)
             .subscribe((resData) => {
                 console.log(resData);

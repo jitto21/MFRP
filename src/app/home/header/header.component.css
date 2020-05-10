@@ -4,7 +4,6 @@
 
 .headers li {
     list-style-type: none;
-    cursor: pointer;
 }
 
 .headers li a {

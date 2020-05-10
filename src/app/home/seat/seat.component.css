@@ -57,7 +57,7 @@
     background-size: contain;
     background-repeat: no-repeat;
 }
-.line {
-    height: 400px;
-    border-left: 6px solid black;
+
+input.ng-invalid.ng-touched {
+    border: 1.5px solid red;
 }

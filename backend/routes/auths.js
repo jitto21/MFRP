@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/auth');
+const checkAuth = require('../middlewares/check-auth');
 const router = express.Router();
 
 router.post('/signup', (req, res, next) => {
@@ -82,6 +83,40 @@ router.post('/login', (req, res, next) => {
                 message: "Login Failed"
             })
         })
+})
+
+router.post('/ticket', checkAuth, (req, res, next)=> {
+    const userId = req.userData.id;
+    console.log("Post ",userId);
+    User.findByIdAndUpdate({_id: userId}, {$push: {tickets: req.body}})
+    .then(result => {
+        console.log(result);
+        res.status(201).json({
+            message: 'Ticket Booked Successfully'
+        })
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: 'Ticket Booking Failed'
+        })
+    })
+})
+
+router.get('/ticket', checkAuth, (req, res, next) => {
+    const userId = req.userData.id;
+    console.log("Get ",userId);
+    User.find({_id: userId})
+    .then(result => {
+        res.status(200).json({
+            message: "Tickets Fetched Successfully",
+            result: result
+        })
+    })
+    .catch(err => {
+        res.status(500).json({
+            message: "Failed to fetch Tickets"
+        })
+    })
 })
 
 module.exports = router;

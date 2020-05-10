@@ -2,7 +2,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject, Component } from '@angular/core';
 
 @Component({
-    templateUrl: './error.component.html'
+    templateUrl: './error.component.html',
+    styleUrls: ['./error.component.css']
 })
 
 export class ErrorComponent {

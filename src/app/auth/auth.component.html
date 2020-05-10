@@ -9,10 +9,11 @@
                 <div class="form-row mb-3">
                     <div class="col-sm-5">
                         <label class="mb-1" for="email">Email</label>
-                        <input type="email" name="email" ngModel required #email="ngModel"
+                        <input type="text" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" name="email" ngModel required #email="ngModel"
                             class="form-control form-control-sm mb-1">
-                        <div class="p-0" *ngIf="email.invalid && email.touched">
-                            <p style="color: red;" class="m-0">Email required</p>
+                        <div class="p-0" *ngIf="email.touched && email.invalid">
+                            <p *ngIf="email.errors.required" style="color: red;" class="m-0">Email required</p>
+                            <p *ngIf="email.errors.pattern" style="color: red;" class="m-0">Enter a Valid Email</p>
                         </div>
                     </div>
                     <div class="col-sm-5">

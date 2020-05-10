@@ -143,13 +143,11 @@ export class SeatComponent implements OnInit {
           break;
         }
       }
-      console.log("****After Removal****")
       console.log(control.value);
       this.selectedSeatNos = this.selectedSeatNos.filter(val => {
         return val !== seatIndex;
        })
        console.log(this.selectedSeatNos);
-      // console.log(this.seatForm.controls['seatDetails'].value[0].seatNo);
     }
     if(this.selectedSeatNos.length > 0) {
       this.showSeat = true;
@@ -161,8 +159,7 @@ export class SeatComponent implements OnInit {
 
   onConfirm() {
     console.log("Confirm: ", this.bus);
-    // this.homeService.bookBus(this.bus._id, this.selectedSeatNos);
-    this.homeService.saveSeatDetails(this.bus._id, this.selectedSeatNos, this.seatForm.value);
+    this.homeService.saveSeatDetails(this.bus._id, this.selectedSeatNos, this.seatForm.value,this.totalFare);
     console.log(this.seatForm.value);
     this.router.navigate(['home/payment']);
   }

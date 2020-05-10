@@ -14,24 +14,28 @@ export class HomeService {
     private seatFormDetails: any;
     private seatDetails: any;
     private date: string = '';
+    private fare: number;
+
     constructor(private http: HttpClient, private router: Router) { }
 
     getBusTicket() {
-        return {
-            name: this.bus.name,
-            type: this.bus.type,
-            from: this.bus.from,
-            to: this.bus.to,
-            dep: this.bus.dep,
-            arr: this.bus.arr,
-            fare: this.bus.fare,
-            date: this.date,
-            seatForm: this.seatFormDetails
-        }
+        // return {
+        //     name: this.bus.name,
+        //     type: this.bus.type,
+        //     from: this.bus.from,
+        //     to: this.bus.to,
+        //     dep: this.bus.dep,
+        //     arr: this.bus.arr,
+        //     fare: this.fare,
+        //     date: this.date,
+        //     seatForm: this.seatFormDetails
+        // }
+        return this.http.get<{message: string, result: any}>('http://localhost:3000/auth/ticket')
     }
 
-    saveSeatDetails(id: string, seatArr: number[], seatForm) {  //save seat Details before payment is done
+    saveSeatDetails(id: string, seatArr: number[], seatForm, fare) {  //save seat Details before payment is done
         this.seatFormDetails = seatForm;
+        this.fare = fare;
         this.seatDetails = {
             id: id,
             seatArr: seatArr
@@ -63,14 +67,25 @@ export class HomeService {
     }
 
     bookBus() {
-        // let bookBusObj ={
-        //     id: id,
-        //     seatArr: selectedSeatNos 
-        // }
+        let busTicket = {
+            name: this.bus.name,
+            type: this.bus.type,
+            from: this.bus.from,
+            to: this.bus.to,
+            dep: this.bus.dep,
+            arr: this.bus.arr,
+            fare: this.fare,
+            date: this.date,
+            seatForm: this.seatFormDetails
+        }
         this.http.post('http://localhost:3000/bus/book', this.seatDetails)
             .subscribe(resData => {
                 console.log(resData);
-                this.router.navigate(['home/confirm']);
+                this.http.post('http://localhost:3000/auth/ticket', busTicket)
+                    .subscribe(resData => {
+                        console.log(resData);
+                        this.router.navigate(['home/confirm']);
+                    })
             })
     }
 }

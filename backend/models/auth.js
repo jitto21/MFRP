@@ -8,7 +8,8 @@ var userSchema = mongoose.Schema({
     lname: {type:String, required: true},
     gender: {type:String, required: true},
     age: {type: Number, required: true},
-    phone: {type:String, required: true}
+    phone: {type:String, required: true},
+    tickets: {type:Array}
 
 })
 

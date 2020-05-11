@@ -19,28 +19,7 @@ export class HomeService {
     constructor(private http: HttpClient, private router: Router) { }
 
     getBusTicket() {
-        // return {
-        //     name: this.bus.name,
-        //     type: this.bus.type,
-        //     from: this.bus.from,
-        //     to: this.bus.to,
-        //     dep: this.bus.dep,
-        //     arr: this.bus.arr,
-        //     fare: this.fare,
-        //     date: this.date,
-        //     seatForm: this.seatFormDetails
-        // }
         return this.http.get<{message: string, result: any}>('http://localhost:3000/auth/ticket')
-    }
-
-    saveSeatDetails(id: string, seatArr: number[], seatForm, fare) {  //save seat Details before payment is done
-        this.seatFormDetails = seatForm;
-        this.fare = fare;
-        this.seatDetails = {
-            id: id,
-            seatArr: seatArr
-        };
-        console.log("Saved in Service: ", this.seatDetails);
     }
 
     getSeatDetails() {
@@ -53,6 +32,16 @@ export class HomeService {
 
     getViewSeats() {
         return this.bus;
+    }
+
+    saveSeatDetails(id: string, seatArr: number[], seatForm, fare) {  //save seat Details before payment is done
+        this.seatFormDetails = seatForm;
+        this.fare = fare;
+        this.seatDetails = {
+            id: id,
+            seatArr: seatArr
+        };
+        console.log("Saved in Service: ", this.seatDetails);
     }
 
     fetchBusDetails(from: string, to: string, date: string) {

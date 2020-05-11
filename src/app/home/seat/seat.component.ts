@@ -90,7 +90,6 @@ export class SeatComponent implements OnInit {
         this.seatArray.forEach((elt, i) => {
           this.bus.bookedSeats.map(no => {
             if (elt.value == no) {
-              // console.log("Match at pos: ", i);
               this.seatArray[i].booked = true;
             }
           })
@@ -117,7 +116,7 @@ export class SeatComponent implements OnInit {
   }
 
   onSeatSelect(seatIndex) {
-    if(this.seatArray[seatIndex-1].booked == true) {
+    if(this.seatArray[seatIndex-1].booked == true || this.selectedSeatNos.length>5) {
       console.log("this seat is Booked !!")
       return;
     }
@@ -135,7 +134,7 @@ export class SeatComponent implements OnInit {
     } else { //remove from array and Form Array
       console.log("Remove seat, ",seatIndex);
       let control =<FormArray> this.seatForm.controls['seatDetails'];
-      for(let i=0;i<=this.selectedSeatNos.length;i++) {
+      for(let i=0; i<=this.selectedSeatNos.length; i++) {
         console.log(control.value[i])
         if(control.value[i].seatNo == seatIndex) {
           console.log("Match Found : ",this.seatForm.controls['seatDetails'].value[i]);

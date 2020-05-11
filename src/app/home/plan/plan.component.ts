@@ -35,11 +35,15 @@ export class PlanComponent implements OnInit, OnDestroy {
   }
 
   onSubmitPlan() {
-    this.homeService.fetchBusDetails(this.planForm.value.from, this.planForm.value.to, this.planForm.value.date);
+    let dateArr = this.planForm.value.date.split("-");
+    dateArr = dateArr.reverse();
+    let formatDate = dateArr.join("-");
+    this.homeService.fetchBusDetails(this.planForm.value.from, this.planForm.value.to, formatDate);
     this.busesArraySub = this.homeService.getBusesArrayListener()
     .subscribe(resData=> {
       console.log(resData);
       this.busesArray = resData;
+      this.busesArray.sort(this.compare) // sort the bus array based on pricing
       if(this.busesArray.length<1) {
         this.showNoBusesMsg = true;
       } else {
@@ -47,10 +51,19 @@ export class PlanComponent implements OnInit, OnDestroy {
           return elt.ava === "No"? true: false;
 
         })
-        console.log(this.viewSeatsDisabled);
         this.showNoBusesMsg = false;
       }
     })
+  }
+
+   compare(a: HomeModel,b: HomeModel) {
+    let compare = 0;
+    if(a.fare>b.fare) {
+      compare =1
+    } else if(a.fare<b.fare) {
+      compare = -1
+    }
+    return compare;
   }
 
   onClearBusArray() {

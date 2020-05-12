@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthSignupModel } from './auth-signup.model';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorComponent } from '../error/error.component';
 
 @Injectable({
     providedIn: 'root'
@@ -13,9 +15,9 @@ export class AuthService {
     private isAuthenticated: boolean = false;
     private logoutTimer;
     private authStateListener = new Subject<boolean>()
-    private loggedInUser = {lname: '',fname: '',age: ''}   
+    private loggedInUser = {name: '',gender: '',age: ''}   
 
-    constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+    constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) { }
 
     getToken() {
         return this.token;
@@ -48,9 +50,12 @@ export class AuthService {
             age: age
         }
         console.log(signupUser);
-        this.http.post('http://localhost:3000/auth/signup', signupUser)
+        this.http.post<{message: string}>('http://localhost:3000/auth/signup', signupUser)
             .subscribe(resData => {
                 console.log(resData);
+                this.dialog.open(ErrorComponent, {
+                    data: {title: resData.message, message: 'Now Login With Your Credentials'}
+                });
             });
     }
 
@@ -63,14 +68,14 @@ export class AuthService {
             message: string,
             token: string,
             expiresIn: number,
-            fname: string,
-            lname: string,
+            name: string,
+            gender: string,
             age: string
         }>('http://localhost:3000/auth/login', loginUser)
             .subscribe((resData) => {
                 console.log(resData);
-                this.loggedInUser.fname = resData.fname;
-                this.loggedInUser.lname = resData.lname;
+                this.loggedInUser.name = resData.name;
+                this.loggedInUser.gender = resData.gender;
                 this.loggedInUser.age = resData.age;
                 this.token = resData.token;
                 const expiresIn = resData.expiresIn;
@@ -79,7 +84,7 @@ export class AuthService {
                     this.authStateListener.next(true);
                     this.autoLogout(expiresIn * 1000);
                     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-                    this.saveAuthData(this.token, expirationDate, this.loggedInUser.fname, this.loggedInUser.lname,this.loggedInUser.age);
+                    this.saveAuthData(this.token, expirationDate, this.loggedInUser.name, this.loggedInUser.gender,this.loggedInUser.age);
                     this.router.navigate(['home/plan'])
                 }
             }, err => {
@@ -101,8 +106,8 @@ export class AuthService {
         console.log("New expiry time in minutes", expiresIn/60000);
         this.autoLogout(expiresIn);
         this.token = user.token;
-        this.loggedInUser.fname = user.fname;
-        this.loggedInUser.lname = user.lname;
+        this.loggedInUser.name = user.name;
+        this.loggedInUser.gender = user.gender;
         this.loggedInUser.age = user.age;
         this.isAuthenticated = true;
         this.authStateListener.next(true);
@@ -126,11 +131,11 @@ export class AuthService {
         this.deleteAuthData();
     }
 
-    saveAuthData(token: string, expirationDate: Date, fname: string, lname: string, age: string) {
+    saveAuthData(token: string, expirationDate: Date, name: string, gender: string, age: string) {
         localStorage.setItem('token', token);
         localStorage.setItem('expirationDate', expirationDate.toISOString());
-        localStorage.setItem('fname', fname);
-        localStorage.setItem('lname', lname);
+        localStorage.setItem('name', name);
+        localStorage.setItem('gender', gender);
         localStorage.setItem('age', age);
     }
 
@@ -138,8 +143,8 @@ export class AuthService {
         localStorage.removeItem('token');
         localStorage.removeItem('expirationDate');
         localStorage.removeItem('userId');
-        localStorage.removeItem('fname');
-        localStorage.removeItem('lname');
+        localStorage.removeItem('name');
+        localStorage.removeItem('gender');
         localStorage.removeItem('age');
     }
 
@@ -147,13 +152,13 @@ export class AuthService {
         let authUser;
         const token = localStorage.getItem("token");
         const expirationDate = localStorage.getItem('expirationDate');
-        const fname = localStorage.getItem("fname");
-        const lname = localStorage.getItem("lname");
+        const name = localStorage.getItem("name");
+        const gender = localStorage.getItem("gender");
         const age = +localStorage.getItem("age");
         if(!token || !expirationDate) {
             return;
         }
-        authUser = {token: token, expirationDate: new Date(expirationDate), fname: fname, lname: lname, age: age}
+        authUser = {token: token, expirationDate: new Date(expirationDate), name: name, gender: gender, age: age}
         return authUser;
     }
 }

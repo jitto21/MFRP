@@ -10,7 +10,7 @@
             <div class="form-row mb-2">
                 <label class="mb-0 col-sm-2" for="">Card Number</label>
                 <input cardDash digitOnly maxlength="19" type="text" class="form-control col-sm-5 col-8" formControlName="cardno"
-                    placeholder="16 digit Card Number" minlength="19">
+                    placeholder="XXXX-XXXX-XXXX-XXXX" minlength="19" matTooltip="'-' will be added automatically as you type">
             </div>
             <div class="form-row">
                 <label class="mb-0 col-sm-2 col-12" for="">Expiry Date</label>
@@ -31,7 +31,7 @@
                 <label class="mb-0 col-sm-2 col-12 text-sm-center" for="">CVV</label>
                 <div class="col-sm-2 col-6 pl-0">
                     <div class="form-group m-0 p-0">
-                        <input digitOnly type="text" class="form-control mb-2" formControlName="cvv" placeholder="***" maxlength="3">
+                        <input digitOnly type="password" class="form-control mb-2" formControlName="cvv" placeholder="***" maxlength="3">
                         <div *ngIf="!payForm.get('cvv').valid && payForm.get('cvv').touched"
                             class="alert alert-danger p-0 m-0">
                             <p class="p-0 m-0">Enter your 3-digit CVV</p>

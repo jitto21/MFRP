@@ -25,7 +25,7 @@
 }
 
 .seat-center-gap {
-    margin: 5px 5px 5px 25px;
+    margin: 5px 5px 5px 30px;
 }
 
 .seat-normal {
@@ -34,7 +34,7 @@
 
 .seat {
     cursor: pointer;
-    width: 8%;
+    width: 10%;
     height: 7%;
     background-image: url('../../bus-bookingw.png');
     background-position: center;

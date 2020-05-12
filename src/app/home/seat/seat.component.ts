@@ -4,6 +4,7 @@ import { HomeModel } from '../home.model';
 import { HomeService } from '../home.service';
 import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-seat',
@@ -69,7 +70,8 @@ export class SeatComponent implements OnInit {
   }
 
   constructor(private router: Router, private homeService: HomeService,
-    private formBuilder: FormBuilder, private authService: AuthService) {
+    private formBuilder: FormBuilder, private authService: AuthService,
+    private  snackBar: MatSnackBar) {
      
   }
 
@@ -106,21 +108,28 @@ export class SeatComponent implements OnInit {
     if(event.target.checked) {
       let loggedInUser = this.authService.getLoggedInUser()
      this.seatDetails.patchValue([
-       {name: loggedInUser.fname+' '+loggedInUser.lname, age: loggedInUser.age}
-     ])
+       {name: loggedInUser.name, age: loggedInUser.age, gender: loggedInUser.gender}
+     ]);
     } else {
       this.seatDetails.patchValue([
-        {name: '', age: ''}
+        {name: '', age: '', gender: ''}
       ])
     }
   }
 
   onSeatSelect(seatIndex) {
-    if(this.seatArray[seatIndex-1].booked == true || this.selectedSeatNos.length>5) {
+    this.seatArray[seatIndex - 1].clicked = !this.seatArray[seatIndex - 1].clicked; //toggle
+    if(this.seatArray[seatIndex-1].booked) {
       console.log("this seat is Booked !!")
       return;
     }
-    this.seatArray[seatIndex - 1].clicked = !this.seatArray[seatIndex - 1].clicked; //toggle
+    if( this.selectedSeatNos.length>4 && this.seatArray[seatIndex - 1].clicked) {
+      this.snackBar.open("Not Allowed To Book More Than 5 Seats","OK", {
+        duration: 3000
+      });
+      this.seatArray[seatIndex - 1].clicked = !this.seatArray[seatIndex - 1].clicked; //toggle
+      return;
+    }
     console.log("Selected: "+this.seatArray[seatIndex - 1].clicked);
     if (this.seatArray[seatIndex - 1].clicked) { //push to array;
       this.selectedSeatNos.push(seatIndex);

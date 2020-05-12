@@ -70,9 +70,9 @@
                                     [id]="'female'+i" formControlName="gender" value="Female">Female</label>
                         </div>
                     </div>
-                    <div *ngIf="i===0" class="self-booking mt-0 mb-1">
-                        <label class="form-check-label" for="self">Booking For Yourself ?
-                            <input (change)="onSelfClicked($event)" id="self" type="checkbox">
+                    <div *ngIf="i===0" class="self-booking mt-0 mb-1 ml-1">
+                        <label class="form-check-label text-danger" for="self">Booking For Yourself ?
+                            <input class="text-danger" (change)="onSelfClicked($event)" id="self" type="checkbox">
                         </label>
                     </div>
                 </div>

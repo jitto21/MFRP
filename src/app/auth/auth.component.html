@@ -66,13 +66,13 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="form-check form-check-inline">
+                <div class="form-group bg-white pl-2" style="width: fit-content; border-radius: 3px;">
+                    <div class="form-check form-check-inline text-dark">
                         <input class="form-check-input" required value="Male" type="radio" name="gender" ngModel
                             id="male" #gender="ngModel">
                         <label class="form-check-label" for="male">Male</label>
                     </div>
-                    <div class="form-check form-check-inline">
+                    <div class="form-check form-check-inline text-dark">
                         <input class="form-check-input" required value="Female" type="radio" name="gender" ngModel
                             id="female" #gender="ngModel">
                         <label class="form-check-label" for="female">Female</label>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="form-group">
                     <input dobDash type="text" required placeholder="DOB: dd/mm/yyyy" class="form-control" name="dob"
-                        ngModel #dob="ngModel" pattern="\d{1,2}/\d{1,2}/\d{4}">
+                        ngModel #dob="ngModel" pattern="\d{1,2}/\d{1,2}/\d{4}" matTooltip="'/' will be added automatically as you type">
                     <div class="mb-0 mt-1" *ngIf="dob.errors?.pattern && dob.touched && dob.dirty">
                         <div role="alert" class="alert alert-danger p-0 m-0">
                             <p class="p-1 m-0">Enter a valid Date of Birth</p>

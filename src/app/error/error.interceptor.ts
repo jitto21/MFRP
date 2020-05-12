@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 console.log(errorMsg);
                 this.dialog.open(ErrorComponent, {
-                    data: {message: errorMsg}
+                    data: {title:'An Error Occured', message: errorMsg}
                 });
                 throw new Error("Method not implemented.");
             })

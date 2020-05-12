@@ -23,7 +23,7 @@ router.post('/signup', (req, res, next) => {
                 .then(result => {
                     console.log(result)
                     res.status(201).json({
-                        message: 'User Saved',
+                        message: 'User Created',
                     })
                 })
                 .catch(err => {
@@ -67,9 +67,9 @@ router.post('/login', (req, res, next) => {
                         message: 'Login Successfull',
                         token: token,
                         expiresIn: 3600,
-                        fname: user.fname,
-                        lname: user.lname,
-                        age: user.age
+                        name: user.fname+' '+user.lname,
+                        age: user.age,
+                        gender: user.gender
                     })
                 })
                 .catch(err => {

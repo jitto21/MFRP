@@ -30,6 +30,7 @@ export class AuthComponent implements OnInit {
     let age = (new Date((Date.now() - dob.getTime())).getUTCFullYear() -1970);
     console.log(age);
     this.authService.signup(form.value, age);
+    form.reset();
 
   }
   onLoginUser(form) {

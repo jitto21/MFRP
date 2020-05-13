@@ -10,8 +10,8 @@ import { AuthGaurd } from '../auth/auth.gaurd';
 const homeRoutes: Routes = [{
     path: '', component: HomeComponent ,canActivate: [AuthGaurd],
     children: [
-        { path: 'plan', component: PlanComponent },
-        { path: 'seat', component: SeatComponent },
+        { path: 'plan', component: PlanComponent},
+        { path: 'seat', component: SeatComponent},
         { path: 'payment', component: PaymentComponent },
         { path: 'confirm', component: ConfirmComponent }
     ]

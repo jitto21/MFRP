@@ -10,7 +10,6 @@ onKeyDown(event: KeyboardEvent) {
 const input = event.target as HTMLInputElement;
 
 let trimmed = input.value.replace(/\s+/g, ''); //trimming the value by ignoring spaces
-console.log(trimmed);
 
 if (trimmed.length > 19) {
   trimmed = trimmed.substr(0, 19);

@@ -31,7 +31,7 @@ export class HomeService {
     }
 
     getViewSeats() {
-        return this.bus;
+        return {bus: this.bus,date: this.date};
     }
 
     saveSeatDetails(id: string, seatArr: number[], seatForm, fare) {  //save seat Details before payment is done

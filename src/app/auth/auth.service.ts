@@ -15,7 +15,8 @@ export class AuthService {
     private isAuthenticated: boolean = false;
     private logoutTimer;
     private authStateListener = new Subject<boolean>()
-    private loggedInUser = {name: '',gender: '',age: ''}   
+    private loggedInUser = {name: '',gender: '',age: ''};
+    private homeStatus = {plan: true, seat: false, confirm: false, payment: false};   
 
     constructor(private http: HttpClient, private router: Router, private dialog: MatDialog) { }
 
@@ -27,8 +28,12 @@ export class AuthService {
         return this.url;
     }
 
-    getLoggedInUser() {
+    getLoggedInUser() { //returns name, age and gender
         return this.loggedInUser;
+    }
+
+    getHomeStatus() { //returns status of plan, seat, paymet and confirm
+        return this.homeStatus;
     }
 
     getAuthStatus() {

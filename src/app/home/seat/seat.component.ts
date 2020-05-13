@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomeModel } from '../home.model';
 import { HomeService } from '../home.service';
@@ -12,6 +12,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./seat.component.css']
 })
 export class SeatComponent implements OnInit {
+  @HostListener("window: beforeunload")
+  onRefresh() {
+    alert("Refreshing");
+  }
   // public seatArray= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40];
   public seatArray = [
     { value: 1, clicked: false, booked: false },
@@ -64,6 +68,7 @@ export class SeatComponent implements OnInit {
   showSeat: boolean = false;
   viewSeatsDisabled: boolean = false;
   driverSeat:number[] = [1,2,3,4];
+  seatsObj
 
   get seatDetails() {
     return this.seatForm.get('seatDetails') as FormArray;
@@ -80,12 +85,13 @@ export class SeatComponent implements OnInit {
       seatDetails: this.formBuilder.array([])
     })
     this.selectedSeatNos = [];
-    this.bus = this.homeService.getViewSeats();
-    console.log(this.bus);
+    this.seatsObj = this.homeService.getViewSeats();
+    this.bus = this.seatsObj.bus;
     if(!this.bus) {
-      console.log("no bus details")
+      console.log("No Bus details")
       this.noBusDetails = true;
     } else {
+      console.log(this.bus);
       this.noBusDetails = false;
       this.totalFare = this.bus.fare + 180;
       if (this.bus.bookedSeats.length > 0) {
@@ -118,11 +124,11 @@ export class SeatComponent implements OnInit {
   }
 
   onSeatSelect(seatIndex) {
-    this.seatArray[seatIndex - 1].clicked = !this.seatArray[seatIndex - 1].clicked; //toggle
     if(this.seatArray[seatIndex-1].booked) {
       console.log("this seat is Booked !!")
       return;
     }
+    this.seatArray[seatIndex - 1].clicked = !this.seatArray[seatIndex - 1].clicked; //toggle
     if( this.selectedSeatNos.length>4 && this.seatArray[seatIndex - 1].clicked) {
       this.snackBar.open("Not Allowed To Book More Than 5 Seats","OK", {
         duration: 3000

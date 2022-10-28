@@ -55,7 +55,7 @@ export class AuthService {
             age: age
         }
         console.log(signupUser);
-        this.http.post<{message: string}>('http://localhost:3000/auth/signup', signupUser)
+        this.http.post<{message: string}>('auth/signup', signupUser)
             .subscribe(resData => {
                 console.log(resData);
                 this.dialog.open(ErrorComponent, {
@@ -76,7 +76,7 @@ export class AuthService {
             name: string,
             gender: string,
             age: string
-        }>('http://localhost:3000/auth/login', loginUser)
+        }>('auth/login', loginUser)
             .subscribe((resData) => {
                 console.log(resData);
                 this.loggedInUser.name = resData.name;

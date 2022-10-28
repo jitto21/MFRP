@@ -148,7 +148,7 @@ export class SeatComponent implements OnInit {
       console.log(this.seatForm.controls['seatDetails'].value);
     } else { //remove from array and Form Array
       console.log("Remove seat, ",seatIndex);
-      let control =<FormArray> this.seatForm.controls['seatDetails'];
+      let control = <FormArray> this.seatForm.controls['seatDetails'];
       for(let i=0; i<=this.selectedSeatNos.length; i++) {
         console.log(control.value[i])
         if(control.value[i].seatNo == seatIndex) {

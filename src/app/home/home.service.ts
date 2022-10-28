@@ -19,7 +19,7 @@ export class HomeService {
     constructor(private http: HttpClient, private router: Router) { }
 
     getBusTicket() {
-        return this.http.get<{message: string, result: any}>('http://localhost:3000/auth/ticket')
+        return this.http.get<{message: string, result: any}>('auth/ticket')
     }
 
     getSeatDetails() {
@@ -46,7 +46,7 @@ export class HomeService {
 
     fetchBusDetails(from: string, to: string, date: string) {
         this.date = date;
-        this.http.get<{ message: string, buses: HomeModel[] }>(`http://localhost:3000/bus/fetch?from=${from}&to=${to}&date=${date}`)
+        this.http.get<{ message: string, buses: HomeModel[] }>(`bus/fetch?from=${from}&to=${to}&date=${date}`)
             .subscribe((resData) => {
                 console.log(resData);
                 this.busesArray = resData.buses;
@@ -67,10 +67,10 @@ export class HomeService {
             date: this.date,
             seatForm: this.seatFormDetails
         }
-        this.http.post('http://localhost:3000/bus/book', this.seatDetails)
+        this.http.post('bus/book', this.seatDetails)
             .subscribe(resData => {
                 console.log(resData);
-                this.http.post('http://localhost:3000/auth/ticket', busTicket)
+                this.http.post('auth/ticket', busTicket)
                     .subscribe(resData => {
                         console.log(resData);
                         this.router.navigate(['home/confirm']);

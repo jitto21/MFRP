@@ -4,7 +4,7 @@ import { HomeModel } from '../home.model';
 import { HomeService } from '../home.service';
 import { FormArray, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
-// import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-seat',
@@ -76,8 +76,7 @@ export class SeatComponent implements OnInit {
 
   constructor(private router: Router, private homeService: HomeService,
     private formBuilder: FormBuilder, private authService: AuthService,
-    //private  snackBar: MatSnackBar
-    ) {
+    private  snackBar: MatSnackBar) {
      
   }
 
@@ -131,9 +130,9 @@ export class SeatComponent implements OnInit {
     }
     this.seatArray[seatIndex - 1].clicked = !this.seatArray[seatIndex - 1].clicked; //toggle
     if( this.selectedSeatNos.length>4 && this.seatArray[seatIndex - 1].clicked) {
-      // this.snackBar.open("Not Allowed To Book More Than 5 Seats","OK", {
-      //   duration: 3000
-      // });
+      this.snackBar.open("Not Allowed To Book More Than 5 Seats","OK", {
+        duration: 3000
+      });
       this.seatArray[seatIndex - 1].clicked = !this.seatArray[seatIndex - 1].clicked; //toggle
       return;
     }

@@ -19,7 +19,6 @@ import { DirectiveModule } from '../directives/directive.module';
         ReactiveFormsModule,
         CommonModule,
         FormsModule,
-        MaterialModule,
         DirectiveModule
     ],
     declarations:[

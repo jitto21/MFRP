@@ -1,4 +1,4 @@
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+// import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject, Component } from '@angular/core';
 
 @Component({
@@ -7,10 +7,10 @@ import { Inject, Component } from '@angular/core';
 })
 
 export class ErrorComponent {
-    constructor(public dialogRef: MatDialogRef<ErrorComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: {title: string, message: string }) { }
+    // constructor(public dialogRef: MatDialogRef<ErrorComponent>,
+    //     @Inject(MAT_DIALOG_DATA) public data: {title: string, message: string }) { }
 
     onClose() {
-        this.dialogRef.close();
+        //this.dialogRef.close();
     }
 }

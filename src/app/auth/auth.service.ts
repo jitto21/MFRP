@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthSignupModel } from './auth-signup.model';
 import { Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+// import { MatDialog } from '@angular/material/dialog';
 import { ErrorComponent } from '../error/error.component';
 import { HttpResponse } from '@angular/common/http';
 
@@ -19,7 +19,8 @@ export class AuthService {
     private loggedInUser = { name: '', gender: '', age: '' };
     private homeStatus = { plan: true, seat: false, confirm: false, payment: false };
 
-    constructor(private http: HttpClientService, private router: Router, private dialog: MatDialog) { }
+    // constructor(private http: HttpClientService, private router: Router, private dialog: MatDialog) { }
+    constructor(private http: HttpClientService, private router: Router) { }
 
     getToken() {
         return this.token;

@@ -7,10 +7,8 @@ import { SeatComponent } from './seat/seat.component';
 import { PaymentComponent } from './payment/payment.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CommonModule, DatePipe, Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { UrlService } from './url.service';
-import { DigitOnlyDirective } from '../directives/digit-only.directive';
-import { MaterialModule } from '../material-module';
 import { DirectiveModule } from '../directives/directive.module';
 
 @NgModule({

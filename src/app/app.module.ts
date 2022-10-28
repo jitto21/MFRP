@@ -28,6 +28,7 @@ import { reducers } from './store/app.state';
     LoadingComponent
   ],
   imports: [
+    MaterialModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

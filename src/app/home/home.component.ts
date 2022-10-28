@@ -1,8 +1,11 @@
+import { Logout } from './../store/actions/auth.action';
+import { AppState } from './../store/app.state';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Store } from '@ngrx/store'
 
 @Component({
   selector: 'app-home',
@@ -11,7 +14,7 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   loggedInUser;
-  constructor(private authService: AuthService) { 
+  constructor(private authService: AuthService, private store: Store<AppState>) { 
   
   }
 
@@ -21,7 +24,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.store.dispatch(new Logout({}));
+    //this.authService.logout();
   }
 
   ngOnDestroy() {

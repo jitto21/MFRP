@@ -1,3 +1,6 @@
+import { LoginAuto, Logout } from './store/actions/auth.action';
+import { AppState } from './store/app.state';
+import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
@@ -8,10 +11,15 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private authService: AuthService) { 
-    
+  constructor(private authService: AuthService, private store: Store<AppState>) {
+
   }
   ngOnInit() {
-    this.authService.autoLogin();
+    const user: any = this.authService.getAuthData();
+    if (user && user.token) {
+      this.store.dispatch(new LoginAuto(user));
+    }
+
+    // this.authService.autoLogin();
   }
 }

@@ -1,8 +1,11 @@
+import { Login } from './../store/actions/auth.action';
+import { AppState } from './../store/app.state';
 import { Component, OnInit } from '@angular/core';
 import { AuthSignupModel } from './auth-signup.model';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { from } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-auth',
@@ -14,7 +17,7 @@ export class AuthComponent implements OnInit {
   passInput: string = '';
   repassInput: string = '';
   emailInput: string = '';
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private store: Store<AppState>) { }
 
   ngOnInit(): void {
   }
@@ -34,6 +37,7 @@ export class AuthComponent implements OnInit {
 
   }
   onLoginUser(form) {
-    this.authService.login(form.value);
+    this.store.dispatch(new Login(form.value));
+    // this.authService.login(form.value);
   }
 }

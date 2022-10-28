@@ -11,8 +11,9 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: import("@angular/common/http").HttpRequest<any>, next: import("@angular/common/http").HttpHandler): import("rxjs").Observable<import("@angular/common/http").HttpEvent<any>> {
         const token = this.authService.getToken();
         const newUrl = req.clone({
-            headers: req.headers.set('Authorization', "Bearer "+token)
-        })
+            headers: req.headers.set('Authorization', "Bearer "+token),
+            url: 'http://localhost:8080/' + req.url
+        });
         return next.handle(newUrl);
     }
 

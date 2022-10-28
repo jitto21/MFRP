@@ -18,7 +18,7 @@ export class ConfirmComponent implements OnInit {
 
   ngOnInit() {
     this.homeService.getBusTicket()
-      .subscribe(resData => {
+      .subscribe((resData: any) => {
         this.ticketsLen = resData.result[0].tickets.length;
         console.log(this.ticketsLen);
         this.busTickets = resData.result[0].tickets;

@@ -1,14 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 
 const busRoutes = require('./routes/buses');
 const authRoutes = require('./routes/auths');
 const mongoUrl = "mongodb://127.0.0.1:27017/bus-booking"
+const mongoAtlasUrl = "mongodb+srv://jittotp:2VDVYvu1vJl4YIIb@cluster0-buaqk.mongodb.net/bus-booking-app?retryWrites=true&w=majority";
 
-mongoose.connect(mongoUrl, {useNewUrlParser: true,  useUnifiedTopology: true})
+mongoose.connect(mongoAtlasUrl, {useNewUrlParser: true,  useUnifiedTopology: true})
 .then(()=>console.log("DB Connected"))
 .catch((err)=> console.log("Error in DB Connection"+err))
 
@@ -22,8 +24,13 @@ app.use((req, res, next) => {
     'GET,POST,PUT,DELETE,PATCH,OPTIONS');
     next();
 })
+app.use(express.static(path.join(__dirname, '../dist/bus-booking-app')));
 
 app.use('/auth', authRoutes);
 app.use('/bus', busRoutes)
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/bus-booking-app/index.html'))
+})
 
 module.exports = app;

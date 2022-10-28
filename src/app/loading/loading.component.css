@@ -1,0 +1,13 @@
+.loading-wrapper {
+  width: 100vw;
+  height: 1000vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgb(128, 128, 128, 0.3);
+  
+}
+
+.loading-wrapper>div {
+    height: 100vh;
+}

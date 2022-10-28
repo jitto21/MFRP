@@ -1,3 +1,4 @@
+import { AuthEffects } from './store/effects/auth.effect';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -13,11 +14,18 @@ import { DirectiveModule } from './directives/directive.module';
 import { ErrorComponent } from './error/error.component';
 import { ErrorInterceptor } from './error/error.interceptor';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { StoreModule } from '@ngrx/store';
+import { LoadingComponent } from './loading/loading.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { reducers } from './store/app.state';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent
+    AuthComponent,
+    LoadingComponent
   ],
   imports: [
     MaterialModule,
@@ -27,7 +35,13 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     FormsModule,
     HomeModule,
     HttpClientModule,
-    DirectiveModule  
+    DirectiveModule,
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([AuthEffects]),
+    StoreDevtoolsModule.instrument({
+      name: 'bus-booking-app',
+      logOnly: environment.production
+    })
   ],
   entryComponents: [ErrorComponent],
   providers: [

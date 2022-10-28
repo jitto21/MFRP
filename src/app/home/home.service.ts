@@ -1,3 +1,4 @@
+import { HttpClientService } from './../services/http-client.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HomeModel } from './home.model';
@@ -16,10 +17,11 @@ export class HomeService {
     private date: string = '';
     private fare: number;
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClientService, private router: Router) { }
 
     getBusTicket() {
-        return this.http.get<{message: string, result: any}>('http://localhost:3000/auth/ticket')
+        // return this.http.get<{message: string, result: any}>('auth/ticket')
+        return this.http.getCall('auth/ticket');
     }
 
     getSeatDetails() {
@@ -31,7 +33,7 @@ export class HomeService {
     }
 
     getViewSeats() {
-        return {bus: this.bus,date: this.date};
+        return { bus: this.bus, date: this.date };
     }
 
     saveSeatDetails(id: string, seatArr: number[], seatForm, fare) {  //save seat Details before payment is done
@@ -46,8 +48,16 @@ export class HomeService {
 
     fetchBusDetails(from: string, to: string, date: string) {
         this.date = date;
-        this.http.get<{ message: string, buses: HomeModel[] }>(`http://localhost:3000/bus/fetch?from=${from}&to=${to}&date=${date}`)
-            .subscribe((resData) => {
+        // this.http.get<{ message: string, buses: HomeModel[] }>(`bus/fetch?from=${from}&to=${to}&date=${date}`)
+        //     .subscribe((resData) => {
+        //         console.log(resData);
+        //         this.busesArray = resData.buses;
+        //         this.busesArrayListener.next(this.busesArray);
+        //         console.log(this.busesArray)
+        //     })
+
+        this.http.getCall(`bus/fetch?from=${from}&to=${to}&date=${date}`)
+            .subscribe((resData: { message: string, buses: HomeModel[] }) => {
                 console.log(resData);
                 this.busesArray = resData.buses;
                 this.busesArrayListener.next(this.busesArray);
@@ -67,14 +77,23 @@ export class HomeService {
             date: this.date,
             seatForm: this.seatFormDetails
         }
-        this.http.post('http://localhost:3000/bus/book', this.seatDetails)
+        this.http.postCall('bus/book', this.seatDetails)
             .subscribe(resData => {
                 console.log(resData);
-                this.http.post('http://localhost:3000/auth/ticket', busTicket)
+                this.http.postCall('auth/ticket', busTicket)
                     .subscribe(resData => {
                         console.log(resData);
                         this.router.navigate(['home/confirm']);
                     })
             })
+        // this.http.post('bus/book', this.seatDetails)
+        // .subscribe(resData => {
+        //     console.log(resData);
+        //     this.http.post('auth/ticket', busTicket)
+        //         .subscribe(resData => {
+        //             console.log(resData);
+        //             this.router.navigate(['home/confirm']);
+        //         })
+        // })
     }
 }

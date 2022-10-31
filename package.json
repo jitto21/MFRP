@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "set NODE_OPTIONS=--openssl-legacy-provider && ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -40,7 +40,11 @@
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "typescript": "~3.7.5",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "engines": {
+      "node": "16.18.0",
+      "npm": "8.19.2"
+    }
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.7",

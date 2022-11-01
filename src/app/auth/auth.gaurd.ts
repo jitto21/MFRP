@@ -1,4 +1,4 @@
-import { AppState, selectAuthState } from './../store/app.state';
+import { AppState } from './../store/app.state';
 import { Store, select } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';

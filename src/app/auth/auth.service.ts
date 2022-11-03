@@ -27,7 +27,6 @@ export class AuthService {
   constructor(
     private http: HttpClientService,
     private router: Router,
-    private dialog: MatDialog
   ) {}
 
   getToken() {

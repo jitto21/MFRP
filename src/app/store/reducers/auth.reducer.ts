@@ -44,9 +44,12 @@ export function authReducer(state = initialState, action: any): AuthState {
         error: null,
       };
     case AuthActionTypes.LOGIN_ERROR:
+    case AuthActionTypes.SIGNUP_ERROR:
       return {
         ...state,
-        error: "Invalid Login Details",
+        error: action.payload.error?.error?.message
+          ? action.payload.error?.error?.message
+          : "Invalid Auth Data",
       };
     case AuthActionTypes.LOGOUT:
     default:

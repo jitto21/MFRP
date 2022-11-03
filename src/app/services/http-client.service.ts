@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { of } from "rxjs";
+import { of, throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { HttpCounterService } from "./http-counter.service";
 
@@ -19,7 +19,7 @@ export class HttpClientService {
       tap(() => this.setHttpCounter(false)),
       catchError((err) => {
         this.setHttpCounter(false);
-        return of(err);
+        return throwError(err);
       })
     );
   }
@@ -30,7 +30,7 @@ export class HttpClientService {
       tap(() => this.setHttpCounter(false)),
       catchError((err) => {
         this.setHttpCounter(false);
-        return of(err);
+        return throwError(err);
       })
     );
   }

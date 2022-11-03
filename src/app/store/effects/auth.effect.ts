@@ -51,7 +51,7 @@ export class AuthEffects {
     map((action: any) => action.payload),
     switchMap((payload: AuthSignupModel) => {
       return this.authService.signup(payload).pipe(
-        tap((response) => {
+        map((response) => {
           console.log(response);
           return new SignupSuccess(response);
         }),

@@ -32,13 +32,5 @@ export class AuthInterceptor implements HttpInterceptor {
           return next.handle(newReq);
         })
       );
-    const token = null;
-    const newReq = req.clone({
-      headers: req.headers.set("Authorization", "Bearer " + token),
-      url: !environment.production
-        ? "http://localhost:8080/" + req.url
-        : req.url,
-    });
-    return next.handle(newReq);
   }
 }

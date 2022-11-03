@@ -1,35 +1,46 @@
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+import { TestBed, async } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { AppComponent } from "./app.component";
+import { HttpClientModule } from "@angular/common/http";
+import { AuthService } from "./auth/auth.service";
+import { Store, StoreModule } from "@ngrx/store";
+import { AppState } from "./store/app.state";
+import { MatDialog } from "@angular/material/dialog";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
-describe('AppComponent', () => {
+describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule,
+        HttpClientModule,
+        StoreModule.forRoot({}),
       ],
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
+      providers: [AuthService, Store],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
+  it("should create the app", () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'bus-booking-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('bus-booking-app');
-  });
-
-  it('should render title', () => {
+  it("should have router outlet", () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('bus-booking-app app is running!');
+    expect(compiled.querySelector("router-outlet")).toBeTruthy();
+  });
+
+  it("should have app loading", () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector("app-loading")).toBeTruthy();
   });
 });

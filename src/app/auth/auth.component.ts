@@ -1,12 +1,11 @@
 import { Login, Signup } from "./../store/actions/auth.action";
-import { AppState } from "./../store/app.state";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { AppState, selectAuthState } from "./../store/app.state";
+import { Component, OnInit } from "@angular/core";
 import { AuthSignupModel } from "./auth-signup.model";
-import { Router } from "@angular/router";
-import { AuthService } from "./auth.service";
-import { from } from "rxjs";
-import { Store } from "@ngrx/store";
+import { StateObservable, Store } from "@ngrx/store";
 import { FormControl, FormGroup, NgForm, Validators } from "@angular/forms";
+import { AuthState } from "../store/reducers/auth.reducer";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-auth",
@@ -20,17 +19,28 @@ export class AuthComponent implements OnInit {
   emailInput: string = "";
   loginForm: FormGroup;
   signupForm: FormGroup;
+  user: AuthState;
+  loggSub: StateObservable;
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.initForms();
+    this.loggSub = this.store.select((selectAuthState) => selectAuthState.auth);
+    this.loggSub.subscribe((user) => {
+      console.log(user);
+      this.user = user;
+    });
   }
 
   initForms() {
+    console.log(this.loginForm);
+    console.log(this.signupForm);
     this.loginForm = new FormGroup({
       email: new FormControl("", [
         Validators.required,
-        Validators.pattern("[^@s]+@[^@s]+.[^@s]+"),
+        Validators.pattern(
+          "^[_0-9a-zA-Z-.]+@([_0-9a-zA-Z-]+.)+[_0-9a-zA-Z-]{2,4}$"
+        ),
       ]),
       pass: new FormControl("", [Validators.required, Validators.minLength(6)]),
     });
@@ -51,7 +61,9 @@ export class AuthComponent implements OnInit {
       ]),
       emailSignup: new FormControl("", [
         Validators.required,
-        Validators.pattern("[^@s]+@[^@s]+.[^@s]+"),
+        Validators.pattern(
+          "^[_0-9a-zA-Z-.]+@([_0-9a-zA-Z-]+.)+[_0-9a-zA-Z-]{2,4}$"
+        ),
       ]),
       passSignup: new FormControl("", [
         Validators.required,
@@ -62,13 +74,18 @@ export class AuthComponent implements OnInit {
         Validators.pattern(".{8,25}"),
       ]),
     });
+    console.log(this.loginForm);
+    console.log(this.signupForm);
   }
 
   onShowPass(event) {
     this.showPass = event.target.checked;
     console.log("showPass: ", this.showPass);
   }
-  onCreateUser() {
+  onCreateUser(): void {
+    if (this.signupForm.invalid) {
+      return this.highlightMandatory("signup");
+    }
     const form = this.signupForm;
     let dateString = form.value.dob;
     var dateParts = dateString.split("/");
@@ -86,10 +103,22 @@ export class AuthComponent implements OnInit {
     };
     console.log(payload);
     this.store.dispatch(new Signup(payload));
-    //form.reset();
+    this.signupForm.reset();
   }
   onLoginUser() {
+    if (this.loginForm.invalid) {
+      return this.highlightMandatory("login");
+    }
     console.log(this.loginForm.value);
     this.store.dispatch(new Login(this.loginForm.value));
+    //this.loginForm.reset();
+  }
+
+  highlightMandatory(section: string): void {
+    const firstInvalidInput: HTMLInputElement = document.querySelector(
+      `div.${section} input.ng-invalid`
+    );
+    firstInvalidInput.setAttribute("has-focus", "yes");
+    firstInvalidInput.focus();
   }
 }

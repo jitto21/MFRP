@@ -12,7 +12,7 @@ import {
 import { AuthService } from "src/app/auth/auth.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Selector, Store } from "@ngrx/store";
-import { AppState, getAuthUser } from "src/app/store/app.state";
+import { AppState } from "src/app/store/app.state";
 import { tap } from "rxjs/operators";
 
 @Component({

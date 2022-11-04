@@ -3,7 +3,6 @@ import { AuthService } from "./auth.service";
 import { Injectable } from "@angular/core";
 import { AppState } from "../store/app.state";
 import { Store } from "@ngrx/store";
-import { getAuthUser } from "../store/app.state";
 import { exhaustMap, switchMap, take, tap } from "rxjs/operators";
 import { of } from "rxjs";
 import { environment } from "src/environments/environment";

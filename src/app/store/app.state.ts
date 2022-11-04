@@ -11,12 +11,12 @@ export const reducers = {
 
 export const selectAuthState = createFeatureSelector<AppState>("auth");
 
-export const getAuthUser = createSelector(
-  selectAuthState,
-  (state: AppState) => state.auth.user
-);
+// export const getAuthUser = createSelector(
+//   selectAuthState,
+//   (state: AppState) => state.auth.user
+// );
 
-export const getIsAuthenticated = createSelector(
-    selectAuthState,
-    (state: AppState) => state.auth.isAuthenticated
-  );
+// export const getIsAuthenticated = createSelector(
+//     selectAuthState,
+//     (state: AppState) => state.auth.user.isAuthenticated
+//   );

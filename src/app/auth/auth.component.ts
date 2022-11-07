@@ -1,5 +1,5 @@
 import { Login, Signup } from "./../store/actions/auth.action";
-import { AppState, selectAuthState } from "./../store/app.state";
+import { AppState, selectAppState } from "./../store/app.state";
 import { Component, OnInit } from "@angular/core";
 import { AuthSignupModel } from "./auth-signup.model";
 import { StateObservable, Store } from "@ngrx/store";
@@ -25,7 +25,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForms();
-    this.loggSub = this.store.select((selectAuthState) => selectAuthState.auth);
+    this.loggSub = this.store.select((selectAppState) => selectAppState.auth);
     this.loggSub.subscribe((user) => {
       console.log(user);
       this.user = user;

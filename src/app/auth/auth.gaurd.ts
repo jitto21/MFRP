@@ -12,7 +12,7 @@ import { tap, switchMap } from 'rxjs/operators';
 export class AuthGaurd implements CanActivate {
     constructor(private authService: AuthService, private router: Router, private store: Store<AppState>) { }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | UrlTree | boolean {
-        return this.store.select(selectAuthState => selectAuthState.auth.isAuthenticated).pipe(
+        return this.store.select(selectAppState => selectAppState.auth.isAuthenticated).pipe(
             tap((isAuth) => {
                 console.log(isAuth)
                 if(!isAuth) {

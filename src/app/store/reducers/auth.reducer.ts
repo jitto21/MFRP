@@ -1,5 +1,4 @@
-import { LoginSuccess } from "./../actions/auth.action";
-import { AuthActionTypes } from "../actions/auth.action";
+import { Auth, AuthActionTypes } from "../actions/auth.action";
 
 export interface AuthState {
   isAuthenticated: boolean;
@@ -13,22 +12,9 @@ export const initialState = {
   error: null,
 };
 
-export function authReducer(state = initialState, action: any): AuthState {
+export function authReducer(state = initialState, action: Auth): AuthState {
   switch (action.type) {
     case AuthActionTypes.LOGIN_SUCCESS:
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: {
-          name: action.payload.name,
-          gender: action.payload.gender,
-          age: action.payload.age,
-          token: action.payload.token,
-          expiresIn: action.payload.expiresIn,
-          expirationDate: action.payload.expiresIn,
-        },
-        error: null,
-      };
     case AuthActionTypes.LOGIN_AUTO_SUCCESS:
       return {
         ...state,
@@ -38,8 +24,7 @@ export function authReducer(state = initialState, action: any): AuthState {
           gender: action.payload.gender,
           age: action.payload.age,
           token: action.payload.token,
-          expiresIn: action.payload.expiresIn,
-          expirationDate: action.payload.expiresIn,
+          expiresIn: action.payload.expiresIn
         },
         error: null,
       };

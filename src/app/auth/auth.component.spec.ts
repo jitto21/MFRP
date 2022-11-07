@@ -1,5 +1,7 @@
 import { HttpClientModule } from "@angular/common/http";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { AuthSignupModel } from "./auth-signup.model";
+
 import {
   async,
   ComponentFixture,
@@ -16,6 +18,7 @@ import { StoreModule } from "@ngrx/store";
 import { AuthComponent } from "./auth.component";
 import { AuthState } from "../store/reducers/auth.reducer";
 import { AppState } from "../store/app.state";
+import { Login, Signup } from "../store/actions/auth.action";
 
 describe("AuthComponent", () => {
   let component: AuthComponent;
@@ -154,7 +157,8 @@ describe("AuthComponent", () => {
   it("should call createUser() on click of signup button and dispatch new user", () => {
     fixture.detectChanges();
     fixture.autoDetectChanges();
-    // spyOn(component, "onCreateUser").and.callThrough();
+    let signupDispatchSpy = spyOn(mockStore, "dispatch");
+    let action;
 
     let onCreateUser = jasmine
       .createSpy("onCreateUser", component.onCreateUser)
@@ -180,6 +184,18 @@ describe("AuthComponent", () => {
           user: null,
           error: null,
         };
+        let payload: AuthSignupModel = {
+          fname: component.signupForm.value.fname,
+          lname: component.signupForm.value.lname,
+          phone: component.signupForm.value.phone,
+          gender: component.signupForm.value.gender,
+          email: component.signupForm.value.emailSignup,
+          pass: component.signupForm.value.passSignup,
+          age,
+        };
+        let action = new Signup(payload);
+        mockStore.dispatch(new Signup({action}));
+        expect(signupDispatchSpy).toHaveBeenCalled();
         mockStore.setState({ auth: initialState });
         component.loggSub.subscribe((authState) => {
           expect(authState.user).toBeNull();
@@ -196,6 +212,7 @@ describe("AuthComponent", () => {
   it("should call login() on click of login button and dispatch logged in user", () => {
     fixture.detectChanges();
     fixture.autoDetectChanges();
+    let loginDispatchSpy = spyOn(mockStore, "dispatch");
     spyOn(component, "onLoginUser").and.callThrough();
     component.loginForm.setValue({
       email: "testuser@test.com",
@@ -205,7 +222,9 @@ describe("AuthComponent", () => {
       fixture.debugElement.nativeElement.querySelector("div.login-btn>button");
     button.click();
     expect(component.onLoginUser).toHaveBeenCalled();
-    //expect(component.loginForm.valid).toBeTruthy();
+    expect(component.loginForm.valid).toBeTruthy();
+    const action = new Login(component.loginForm.value);
+    expect(loginDispatchSpy).toHaveBeenCalledWith(action);
     const loggedInState = {
       auth: {
         isAuthenticated: true,

@@ -74,7 +74,7 @@ describe("Auth Effects", () => {
       const outcome = new LoginError({loginErrorPayload});
       testScheduler.run(({ hot, cold, expectObservable }) => {
         actions = hot("-a", { a: action });
-        const response = cold("-#|", {}, {'loginErrorPayload': loginErrorPayload});
+        const response = cold("-#|", {}, loginErrorPayload);
         authServiceSpy.login.and.returnValue(response);
         expectObservable(effects.Login).toBe("--b", { b: outcome });
       });

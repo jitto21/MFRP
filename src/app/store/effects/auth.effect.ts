@@ -80,10 +80,10 @@ export class AuthEffects {
   LoginAuto: Observable<any> = this.actions.pipe(
     ofType(AuthActionTypes.LOGIN_AUTO),
     map((action: any) => action.payload),
-    switchMap((user) => {
+    map((user) => {
       if (user && user.token) {
         console.log(AuthActionTypes.LOGIN_AUTO + " ", user);
-        return of(new LoginAutoSuccess(user));
+        return new LoginAutoSuccess(user);
       }
       return throwError("Auto Login Failed :: Could not get token");
     }),

@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { Router } from "@angular/router";
-import { HomeModel } from "../home.model";
+import { BusType } from "../../interfaces/bus.interface";
 import { HomeService } from "../home.service";
 import {
   FormArray,
@@ -68,7 +68,7 @@ export class SeatComponent implements OnInit {
     { value: 39, clicked: false, booked: false },
     { value: 40, clicked: false, booked: false },
   ];
-  bus: HomeModel = null;
+  bus: BusType = null;
   noBusDetails: boolean;
   totalFare: number = 0;
   selectedSeatNos: number[] = [];

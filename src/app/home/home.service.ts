@@ -1,7 +1,6 @@
 import { HttpClientService } from './../services/http-client.service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HomeModel } from './home.model';
+import { BusType } from './../interfaces/bus.interface';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -9,9 +8,9 @@ import { Router } from '@angular/router';
     providedIn: 'root'
 })
 export class HomeService {
-    bus: HomeModel;
-    busesArray: HomeModel[];
-    private busesArrayListener = new Subject<HomeModel[]>();
+    bus: BusType;
+    busesArray: BusType[];
+    private busesArrayListener = new Subject<BusType[]>();
     private seatFormDetails: any;
     private seatDetails: any;
     private date: string = '';
@@ -48,21 +47,13 @@ export class HomeService {
 
     fetchBusDetails(from: string, to: string, date: string) {
         this.date = date;
-        // this.http.get<{ message: string, buses: HomeModel[] }>(`bus/fetch?from=${from}&to=${to}&date=${date}`)
-        //     .subscribe((resData) => {
-        //         console.log(resData);
-        //         this.busesArray = resData.buses;
-        //         this.busesArrayListener.next(this.busesArray);
-        //         console.log(this.busesArray)
-        //     })
-
-        this.http.getCall(`bus/fetch?from=${from}&to=${to}&date=${date}`)
-            .subscribe((resData: { message: string, buses: HomeModel[] }) => {
-                console.log(resData);
-                this.busesArray = resData.buses;
-                this.busesArrayListener.next(this.busesArray);
-                console.log(this.busesArray)
-            })
+        return this.http.getCall(`bus/fetch?from=${from}&to=${to}&date=${date}`);
+            // .subscribe((resData: { message: string, buses: BusType[] }) => {
+            //     console.log(resData);
+            //     this.busesArray = resData.buses;
+            //     this.busesArrayListener.next(this.busesArray);
+            //     console.log(this.busesArray)
+            // })
     }
 
     bookBus() {

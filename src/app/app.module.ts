@@ -20,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { reducers } from './store/app.state';
+import { TicketEffects } from './store/effects/ticket.effect';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { reducers } from './store/app.state';
     HttpClientModule,
     DirectiveModule,
     StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, TicketEffects]),
     StoreDevtoolsModule.instrument({
       name: 'bus-booking-app',
       logOnly: environment.production

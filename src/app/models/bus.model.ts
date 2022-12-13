@@ -1,5 +1,10 @@
-export interface BusType {
+export interface BusType extends BusMain {
   _id: string;
+  ava: string;
+  bookedSeats: number[]
+}
+
+export interface BusMain {
   name: string;
   from: string;
   to: string;
@@ -7,7 +12,5 @@ export interface BusType {
   dep: string;
   arr: string;
   date: string;
-  ava: string;
   fare: number;
-  bookedSeats: number[]
 }

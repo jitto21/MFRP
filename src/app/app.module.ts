@@ -38,7 +38,7 @@ import { TicketEffects } from './store/effects/ticket.effect';
     HomeModule,
     HttpClientModule,
     DirectiveModule,
-    StoreModule.forRoot(reducers, {}),
+    StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AuthEffects, TicketEffects]),
     StoreDevtoolsModule.instrument({
       name: 'bus-booking-app',

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { DatePipe, JsonPipe } from "@angular/common";
 import { HomeService } from "../home.service";
-import { BusType } from "../../interfaces/bus.interface";
+import { BusType } from "../../models/bus.model";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";

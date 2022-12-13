@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { Router } from "@angular/router";
-import { BusType } from "../../interfaces/bus.interface";
+import { BusType } from "../../models/bus.model";
 import { HomeService } from "../home.service";
 import {
   FormArray,
@@ -14,6 +14,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Selector, Store } from "@ngrx/store";
 import { AppState } from "src/app/store/app.state";
 import { tap } from "rxjs/operators";
+import { BusSeatSelectSuccess } from "src/app/store/actions/ticket.action";
 
 @Component({
   selector: "app-seat",
@@ -217,6 +218,15 @@ export class SeatComponent implements OnInit {
 
   onConfirm() {
     console.log("Confirm: ", this.bus);
+    const seatDetailsPayload = {
+      seatFormDetails: this.seatForm.value,
+      fare: this.totalFare,
+      seatDetails: {
+        id: this.bus._id,
+        seatArr: this.selectedSeatNos,
+      },
+    };
+    this.store.dispatch(new BusSeatSelectSuccess(seatDetailsPayload));
     this.homeService.saveSeatDetails(
       this.bus._id,
       this.selectedSeatNos,

@@ -11,6 +11,9 @@ import {
   BusSuccess,
   BusBookSuccess,
   BusBookError,
+  BusBookFetch,
+  BusBookFetchSuccess,
+  BusBookFetchError,
 } from "../actions/ticket.action";
 
 @Injectable()
@@ -65,5 +68,17 @@ export class TicketEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  fetchTicket = createEffect(() =>
+    this.action.pipe(
+      ofType(TicketActionsTypes.BUS_BOOK_FETCH),
+      exhaustMap(() => {
+        return this.homeService.getBusTicket().pipe(
+          map((response) => new BusBookFetchSuccess(response)),
+          catchError((error) => of(new BusBookFetchError(error)))
+        );
+      })
+    )
   );
 }

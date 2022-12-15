@@ -1,5 +1,5 @@
 <div class="container px-1">
-    <div class="ticket" *ngIf="busTicketsArray">
+    <div class="ticket" *ngIf="busTicketsArray && busTicketsArray.length > 0; else noBookings">
         <h4 class="ml-2">Bus Ticket</h4>
         <div class="bus-tickets" *ngFor="let busTicket of busTicketsArray">
             <div class="main">
@@ -53,28 +53,13 @@
                             <td>{{ busTicket.fare }}</td>
                         </tr>
                     </tbody>
-                    <!-- <thead>
-                        <tr>
-                            <th>Departure</th>
-                            <th>Departure Time</th>
-                            <th>Destination</th>
-                            <th>Arrival Time</th>
-                            <th>Total Fare</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Chennai</td>
-                            <td>10:30pm</td>
-                            <td>bangalore</td>
-                            <td>9:30am</td>
-                            <td>1800</td>
-                        </tr>
-                    </tbody> -->
                 </table>
             </div>
         </div>
     </div>
+    <ng-template #noBookings>
+        <p>No bookings to show</p>
+    </ng-template>
     <div class="btn-wrapper m-2">
         <div class="show-more-tickets">
             <button *ngIf="ticketsLen>1" class="btn-sm btn btn-primary" (click)="onShowMore()"
@@ -82,7 +67,7 @@
         </div>
         <div class="book-again-btn">
             <button matTooltip="Goto Plan your travel" class="btn-sm btn btn-success" (click)="onBookAgain()"
-                type="button">Book Again</button>
+                type="button">Book {{ busTicketsArray.length > 0 ? "Again": "Tickets" }}</button>
         </div>
     </div>
 </div>

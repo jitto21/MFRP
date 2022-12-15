@@ -1,33 +1,38 @@
-import { AuthEffects } from './store/effects/auth.effect';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { AuthEffects } from "./store/effects/auth.effect";
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AuthComponent } from './auth/auth.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material-module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HomeModule } from './home/home.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { DirectiveModule } from './directives/directive.module';
-import { ErrorComponent } from './error/error.component';
-import { ErrorInterceptor } from './error/error.interceptor';
-import { AuthInterceptor } from './auth/auth-interceptor';
-import { StoreModule } from '@ngrx/store';
-import { LoadingComponent } from './loading/loading.component';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from 'src/environments/environment';
-import { reducers } from './store/app.state';
-import { TicketEffects } from './store/effects/ticket.effect';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { AuthComponent } from "./auth/auth.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MaterialModule } from "./material-module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HomeModule } from "./home/home.module";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { DirectiveModule } from "./directives/directive.module";
+import { ErrorComponent } from "./error/error.component";
+import { ErrorInterceptor } from "./error/error.interceptor";
+import { AuthInterceptor } from "./auth/auth-interceptor";
+import { ActionReducer, MetaReducer, StoreModule } from "@ngrx/store";
+import { LoadingComponent } from "./loading/loading.component";
+import { EffectsModule } from "@ngrx/effects";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { environment } from "src/environments/environment";
+import { reducers } from "./store/app.state";
+import { TicketEffects } from "./store/effects/ticket.effect";
+
+export function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
+  return function (state, action) {
+    state = action.type === "[Auth] Logout" ? undefined : state;
+    return reducer(state, action);
+  };
+}
+
+export const metaReducers: MetaReducer<any>[] = [clearState];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthComponent,
-    LoadingComponent
-  ],
+  declarations: [AppComponent, AuthComponent, LoadingComponent],
   imports: [
     MaterialModule,
     BrowserModule,
@@ -38,21 +43,21 @@ import { TicketEffects } from './store/effects/ticket.effect';
     HomeModule,
     HttpClientModule,
     DirectiveModule,
-    StoreModule.forRoot(reducers),
+    StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([AuthEffects, TicketEffects]),
     StoreDevtoolsModule.instrument({
-      name: 'bus-booking-app',
-      logOnly: environment.production
-    })
+      name: "bus-booking-app",
+      logOnly: environment.production,
+    }),
   ],
   entryComponents: [ErrorComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

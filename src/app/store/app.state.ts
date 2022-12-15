@@ -25,10 +25,15 @@ export const ticketState = (state: AppState) => state.ticket;
 
 export const selectBuses = createSelector(
   ticketState,
-  (state: ticket.TicketState) => state.plan.buses
+  (state: ticket.TicketState) => state.plan?.buses
 );
 
 export const selectSeat = createSelector(
   ticketState,
   (state: ticket.TicketState) => state.seat
+);
+
+export const selectConfirm = createSelector(
+  ticketState,
+  (state: ticket.TicketState) => state.confirm
 );

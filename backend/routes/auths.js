@@ -109,7 +109,7 @@ router.get('/ticket', checkAuth, (req, res, next) => {
     .then(result => {
         res.status(200).json({
             message: "Tickets Fetched Successfully",
-            result: result
+            tickets: result
         })
     })
     .catch(err => {
